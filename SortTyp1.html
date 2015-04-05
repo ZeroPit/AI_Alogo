@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">   
+    <script src="d3/d3.min.js"></script>
+
+    <script src="sort/animate-sort.js"></script>   
+
+    <script src="sort/bubblesort.js"></script>
+    <script src="sort/selectionsort.js"></script>
+    <script src="sort/insertionsort.js"></script>
+    <script src="sort/shellsort.js"></script>
+    <script src="sort/quicksort.js"></script>
+    <script src="sort/heapsorter.js"></script>
+    <script src="sort/mergesort.js"></script>
+    <script src="sort/bitonicsorter.js"></script>
+    <script src="sort/oddeventranspositionsort.js"></script>
+    <script src="sort/oddevenmergesorter.js"></script>
+    <script src="sort/mergesort.js"></script>
+    <script src="sort/bogosort.js"></script>
+
+    <style>
+        body {font-family: "Helvetica Neue", Helvetica, sans-serif; }		
+        line {  fill: none;  stroke: #000;  stroke-width: 10px;}
+        line.pivot {  stroke: 'pink';  opacity: 1;}
+        #wrap {	height: 500px;	padding: 80px 0 0 40px;}
+    </style>
+
+</head>
+<body>
+    <div id="wrap">
+        <section id="bubblesort"><h2>Bubblesort</h2></section> 
+        <section id="insertionsort"><h2>Insertionsort</h2></section> 	
+        <section id="selectionsort"><h2>Selectionsort</h2></section>
+        <section id="shellsort"><h2>Shellsort</h2></section> 		
+        <section id="quicksort"><h2>Quicksort</h2></section>
+        <section id="heapsort"><h2>Heapsort</h2></section>      
+        <section id="bitonicsorter"><h2>Bitonic Sort</h2></section> 
+        <section id="oddeventranspositionsort"><h2>Odd–even Sort</h2></section>      
+        <section id="oddevenmergesorter"><h2>Odd-even Mergesort</h2></section>  
+        <section id="mergesort"><h2>Mergesort</h2></section>      
+        <section id="bogosort"><h2>Bogosort</h2></section>  
+
+        <script>
+
+            function addClick(SortAreaid, SortAll) {
+                d3.select(SortAreaid).on("click", function () {
+                    d3.select(SortAreaid).select("svg").remove();
+                    SortingAnimation.prepareAnimation(SortAll.sortAll, SortAreaid);
+                });
+                SortingAnimation.prepareAnimation(SortAll.sortAll, SortAreaid);
+            }
+
+            addClick("#bubblesort", new BubbleSort());
+            addClick("#selectionsort", new SelectionSort());
+            addClick("#insertionsort", new InsertionSort());
+            addClick("#shellsort", new ShellSort());
+            addClick("#quicksort", new Quicksort());
+            addClick("#heapsort", new Heapsort());
+            addClick("#bitonicsorter", new BitonicSorter());
+            addClick("#oddeventranspositionsort", new OddEvenTranspositionSort());
+            addClick("#oddevenmergesorter", new OddEvenMergeSorter());
+            addClick("#mergesort", new MergeSorter());
+            addClick("#bogosort", new Bogosort());
+            SortingAnimation.start(1000);
+        </script>
+    </div>
+</body>
+</html>

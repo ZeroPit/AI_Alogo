@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8"> 
+    <script src="d3/d3.min.js"></script>
+
+    <script src="sort/animate-sort3.js"></script>
+
+    <script src="sort/bubblesort.js"></script>
+    <script src="sort/selectionsort.js"></script>
+    <script src="sort/insertionsort.js"></script>
+    <script src="sort/shellsort.js"></script>
+    <script src="sort/quicksort.js"></script>
+    <script src="sort/heapsorter.js"></script>
+    <script src="sort/mergesort.js"></script>
+    <script src="sort/bitonicsorter.js"></script>
+    <script src="sort/oddeventranspositionsort.js"></script>
+    <script src="sort/oddevenmergesorter.js"></script>
+    <script src="sort/mergesort.js"></script>
+    <script src="sort/bogosort.js"></script>
+
+    <style>
+        body {font-family: "Helvetica Neue", Helvetica, sans-serif; }
+        .SortArea { float: left;}
+    </style>
+</head>
+<body>
+    <div id="wrap">  
+        <div class="SortArea"><h2>Bubblesort</h2><section id="bubblesort"></section></div>
+        <div class="SortArea"><h2>Insertionsort</h2><section id="insertionsort"></section></div>  
+        <div class="SortArea"><h2>Selectionsort</h2><section id="selectionsort"></section></div>
+        <div class="SortArea"><h2>Shellsort</h2><section id="shellsort"></section></div>
+        <div class="SortArea"><h2>Quicksort</h2><section id="quicksort"></section></div>
+        <div class="SortArea"><h2>Heapsort</h2><section id="heapsort"></section></div>  
+        <div class="SortArea"><h2>Bitonic Sort</h2><section id="bitonicsorter"></section></div> 
+        <div class="SortArea"><h2>Odd–even Sort</h2><section id="oddeventranspositionsort"></section></div> 
+        <div class="SortArea"><h2>Odd-even Mergesort</h2><section id="oddevenmergesorter"></section></div> 
+        <div class="SortArea"><h2>Mergesort</h2><section id="mergesort"></section></div> 
+        <div class="SortArea"><h2>Bogosort</h2><section id="bogosort"></section></div> 
+
+
+
+        <script>
+            function addClick(SortAreaid, SortAll) {
+                d3.select(SortAreaid).on("click", function () {
+                    d3.select(SortAreaid).select("svg").remove();
+                    SortingAnimation3.prepareAnimation(SortAll.sortAll, SortAreaid);                  
+                });
+                SortingAnimation3.prepareAnimation(SortAll.sortAll, SortAreaid);
+            }
+
+            addClick("#bubblesort", new BubbleSort());
+            addClick("#selectionsort", new SelectionSort());
+            addClick("#insertionsort", new InsertionSort());
+            addClick("#shellsort", new ShellSort());
+            addClick("#quicksort", new Quicksort());
+            addClick("#heapsort", new Heapsort());
+            addClick("#bitonicsorter", new BitonicSorter());
+            addClick("#oddeventranspositionsort", new OddEvenTranspositionSort());
+            addClick("#oddevenmergesorter", new OddEvenMergeSorter());
+            addClick("#mergesort", new MergeSorter());
+            addClick("#bogosort", new Bogosort());
+
+
+            SortingAnimation3.start(1000);
+        </script>
+    </div>
+</body>
+</html>

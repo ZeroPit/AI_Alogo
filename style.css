@@ -1,0 +1,37 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, sans-serif;  
+	background: black; 
+}
+line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 10px;
+}
+line.pivot {
+  stroke: 'pink';
+  opacity: 1;
+}
+h1, h2 {
+  font-weight: normal;
+}
+svg {
+	float: left;
+}
+h2.sorting-title {
+	float: left;
+	margin: 0.5em 0 0 1em;
+	padding: 0;
+}
+a {
+  color: #7F2704;
+  text-decoration: none;
+  font-weight: normal;
+  text-shadow: #EEEE00 0 2 2px;
+}
+section {
+	clear: left;
+}
+#wrap {
+	height: 500px;
+	padding: 80px 0 0 40px;
+}
