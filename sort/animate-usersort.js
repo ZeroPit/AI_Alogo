@@ -1,97 +1,123 @@
 
 function UserSorting(sortingfunction, target) {
-    var _SortingFunction = sortingfunction;
-    var _Target = target;
-  
+    this.SortingFunction = sortingfunction;
+    this.Target = target;
 
     var svgW = 598, svgH = 100, vRad = 12;
-    var cy = 40;
-    var tree = {cx: svgW / 2, cy: 30, w: 60, h: 70};
-
 
 
     var maxArray = 8;
-    var _Array = [];
     var _SteepFin = false;
-    var _LeftFocus = 0;
-    var _RightFocus = 0;
+    this.SortInfo = {
+        "Array": [],
+        "ArrayUp": [],
+        "Left": -1,
+        "Right": -1,
+        "Up": -1,
+        "click": -1,
+        "Mode": 0
+    };
+    var _Steep;
 
-    startNew = function ()
-    {
-        createNewArray();
+    this.startNew = function () {
+        this.createNewArray();
         _SteepFin = false;
-        updateAll();
+        this.SortInfo.Left = this.SortingFunction.LeftStart;
+        this.SortInfo.Right = this.SortingFunction.RightStart;
+        this.SortInfo.click = -1;
+        this.SortInfo.Up = -1;
+        this.SortInfo.Mode = 0;
+        _Steep = 0;
+        updateAll(this);
     };
-    createNewArray = function () {
-        _Array = [];
+    this.createNewArray = function ()
+    {
+        this.SortInfo.Array = [];
+        this.SortInfo.ArrayUp = [];
         var lMax = Math.floor((Math.random() * (maxArray - 4)) + 5);
-        for (var i = 0; i < lMax; i++)
-            _Array.push(Math.floor((Math.random() * lMax) + 1));
-    };
-    clickLeft = function (Id) {
-
-    };
-    clickRight = function (Id) {
+        for (var i = 0; i < lMax; i++) {
+            this.SortInfo.Array.push(Math.floor((Math.random() * lMax) + 1));
+            this.SortInfo.ArrayUp.push(-1);
+        }
 
     };
 
-    setFocus = function (leafId) {
-        if (hasHeap() === -1)
-            leafId = -1;
-        else if (isLeafHeap(leafId, leafId) === -1)
-            leafId = hasHeap();
-        leafFocus = leafId;
-        var circles = d3.select("#g_circles").selectAll('circle').data(getVertices());
-        circles.attr('style', function (d) {
-            if (d.v === leafId)
-                return 'stroke:red;stroke-width:4px;';
-            else
-                return 'steelblue;stroke-width:2px;';
-        });
-        if (leafId === -1)
-            alert("Heap Vollstandig");
+    this.clickArray = function (Id) {      
+        this.SortInfo.click = Id;    
+        this.SortInfo = this.SortingFunction.onClick(this.SortInfo,true);      
+        updateAll(this);
+    };
+     this.clickArrayUp = function (Id) {   
+        this.SortInfo.click = Id;      
+        this.SortInfo = this.SortingFunction.onClick(this.SortInfo,false);    
+        updateAll(this);
     };
 
-
-    getPosition = function () {
-        var lSteep = svgW / _Array.length;
+    this.getPosition = function (all) {
+           
+        var lArray = this.SortInfo.Array;
+        var lSteep = svgW / lArray.length;
         var lPositions = [];
-        for (var i = 0; i < _Array.length; i++) {
-            lPositions.push({v: i, l: _Array[i], p: {x: lSteep * i + 30, y: cy}});
+        for (var i = 0; i < lArray.length; i++) {  
+            if(lArray[i]!==-1 || all)
+                lPositions.push({v: i, l: lArray[i],up:0, p: {x: lSteep * i + 30, y: 60}});
+        }
+        lArray = this.SortInfo.ArrayUp;            
+        for (var i = 0; i < lArray.length; i++) {
+           if(lArray[i]!==-1)
+                lPositions.push({v: i, l: lArray[i],up:1, p: {x: lSteep * i + 30, y: 20}});
         }
         return lPositions;
     };
 
-    updateAll = function ()
-    {      
-        var SortDiv = d3.select("#usersort" + _Target);
+    updateAll = function (pThis)
+    {
+        var SortDiv = d3.select("#usersort" + pThis.Target);
+        SortDiv.select("#info").select('p').text(pThis.SortingFunction.updateMode(pThis.SortInfo.Mode));
         //Löscht die alten Elemente      
         SortDiv.select("#sortsvg").select("#g_circles").remove();
         SortDiv.select("#sortsvg").select("#g_labels").remove();
 
-        //Kreise für die Blätter
-        SortDiv.select("#sortsvg").append('g').attr('id', 'g_circles').selectAll('circle').data(getPosition()).enter().append('circle').attr('cx', function (d) {
+        //Kreise
+        SortDiv.select("#sortsvg").append('g').attr('id', 'g_circles').selectAll('circle').data(pThis.getPosition(true)).enter().append('circle').attr('cx', function (d) {
             return d.p.x;
         }).attr('cy', function (d) {
             return d.p.y;
         }).attr('r', vRad).on('click', function (d) {
-            return clickLeaf(d.v);
+            if(d.up===0)
+                return pThis.clickArray(d.v);
+            else
+                return pThis.clickArrayUp(d.v);
+        }).attr('style', function (d) {
+                         
+                if (d.v === pThis.SortInfo.Left && pThis.SortInfo.Left >= 0 && d.up ===0)
+                    return 'stroke:green;stroke-width:4px;';
+                else if (d.v === pThis.SortInfo.Right && pThis.SortInfo.Right >= 0 && d.up ===0)
+                    return 'stroke:red;stroke-width:4px;';
+                else if (d.v === pThis.SortInfo.Up && pThis.SortInfo.Up >= 0 && d.up ===1)
+                    return 'stroke:red;stroke-width:4px;';
+                else
+                    return 'steelblue;stroke-width:2px;';
+           
         });
 
         //Nummerierung der Kreise	
-        SortDiv.select("#sortsvg").append('g').attr('id', 'g_labels').selectAll('text').data(getPosition()).enter().append('text').attr('x', function (d) {
+        SortDiv.select("#sortsvg").append('g').attr('id', 'g_labels').selectAll('text').data(pThis.getPosition(false)).enter().append('text').attr('x', function (d) {
             return d.p.x;
         }).attr('y', function (d) {
             return d.p.y + 5;
         }).text(function (d) {
             return d.l;
         }).on('click', function (d) {
-            return clickLeaf(d.v);
-        });
+            if(d.up===0)
+                return pThis.clickArray(d.v);
+            else
+                return pThis.clickArrayUp(d.v);
+        });      
     };
-    redraw = function () {
-
-        var circles = d3.select("#g_circles").selectAll('circle').data(getPosition());
+    redraw = function (pThis) {
+        var SortDiv = d3.select("#usersort" + pThis.Target);
+        var circles = SortDiv.select("#sortsvg").select("#g_circles").selectAll('circle').data(getPosition());
 
         circles.transition().duration(500).attr('cx', function (d) {
             return d.p.x;
@@ -104,14 +130,14 @@ function UserSorting(sortingfunction, target) {
         }).attr('cy', function (d) {
             return d.f.p.y;
         }).attr('r', vRad).on('click', function (d) {
-            return clickLeaf(d.v);
+            return pThis.clickArray(d.v);
         }).transition().duration(500).attr('cx', function (d) {
             return d.p.x;
         }).attr('cy', function (d) {
             return d.p.y;
         });
 
-        var labels = d3.select("#g_labels").selectAll('text').data(getPosition());
+        var labels = SortDiv.select("#sortsvg").select("#g_labels").selectAll('text').data(getPosition());
         labels.text(function (d) {
             return d.l;
         }).transition().duration(500).attr('x', function (d) {
@@ -127,7 +153,7 @@ function UserSorting(sortingfunction, target) {
         }).text(function (d) {
             return d.l;
         }).on('click', function (d) {
-            return clickLeaf(d.v);
+            return pThis.clickArray(d.v);
         }).transition().duration(500).attr('x', function (d) {
             return d.p.x;
         }).attr('y', function (d) {
@@ -135,38 +161,19 @@ function UserSorting(sortingfunction, target) {
         });
     };
 
-    getLeafCount = function (_) {
-        if (_.c.length === 0)
-            return 1;
-        else
-            return _.c.map(getLeafCount).reduce(function (a, b) {
-                return a + b;
-            });
-    };
-
-    reposition = function (v) {
-        var lC = getLeafCount(v), left = v.p.x - tree.w * (lC - 1) / 2;
-        v.c.forEach(function (d) {
-            var w = tree.w * getLeafCount(d);
-            left += w;
-            d.p = {x: left - (w + tree.w) / 2, y: v.p.y + tree.h};
-            reposition(d);
+    initialize = function (pThis) {
+        d3.select("#" + pThis.Target).append("div").attr('id', 'usersort' + pThis.Target);
+        d3.select("#usersort" + pThis.Target).append("div").attr('id', 'info').append("p");
+        d3.select("#usersort" + pThis.Target).append("svg").attr("width", svgW).attr("height", svgH).attr('id', 'sortsvg');
+        d3.select("#usersort" + pThis.Target).append("div").attr('id', 'buttondiv' + pThis.Target);
+        d3.select("#buttondiv" + pThis.Target).append("button").attr('id', 'button1' + pThis.Target).attr('type', 'button').attr('style', 'width:190px').text('Neuer Veruch').on('click', function (d) {
+            return pThis.startNew();
         });
-    };
-
-    initialize = function () {
-        d3.select("#" + _Target).append("div").attr('id', 'usersort' + _Target);
-        d3.select("#usersort" + _Target).append("div").attr('id', 'arraydiv');
-        d3.select("#usersort" + _Target).append("svg").attr("width", svgW).attr("height", svgH).attr('id', 'sortsvg');
-        d3.select("#usersort" + _Target).append("div").attr('id', 'buttondiv'+ _Target);
-        d3.select("#buttondiv"+ _Target).append("button").attr('id', 'button1'+ _Target).attr('type', 'button').attr('style', 'width:190px').text('Neuer Veruch').on('click', function (d) {
-            return startNew(_Target);
+        d3.select("#buttondiv" + pThis.Target).append("button").attr('id', 'button2' + pThis.Target).attr('type', 'button').attr('style', 'width:190px; margin-left:15px').text('Hilfe').on('click', function (d) {
+            return nextSteep();
         });
-        d3.select("#buttondiv"+ _Target).append("button").attr('id', 'button2'+ _Target).attr('type', 'button').attr('style', 'width:190px; margin-left:15px').text('Hilfe').on('click', function (d) {
-            return nextSteep(_Target);
-        });
-        startNew();
+        pThis.startNew();
     };
-    initialize();
+    initialize(this);
     return this;
 }

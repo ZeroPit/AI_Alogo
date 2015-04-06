@@ -1,4 +1,7 @@
 function SelectionSort() {
+    /**
+     * Visual Sort
+     */
     var _Actions, _Array;
     this.sortAll = function (array) {
         _Actions = [];
@@ -23,5 +26,77 @@ function SelectionSort() {
             }
         }
     }
+
+    /**
+     * User Sort
+     */
+
+    this.LeftStart = 0;
+    this.RightStart = -1;
+
+    this.updateMode = function (pMode) {
+        /*
+         Methode:	
+         für i=0 bis n-2 wiederhole
+         für j=i+1 bis n-1 wiederhole
+         wenn a[j] < a[i]
+         vertausche a[i] mit a[j]
+         */
+        switch (pMode) {
+            case 0:
+                return "Grün anklicken";
+            case 1:
+                return "Grün anklicken";
+            case 2:
+                return "Grün anklicken";
+            case 3:
+                return "Fertig";
+        }
+    };
+    this.onClick = function (pSortInfo, pOriginal) {
+        switch (pSortInfo.Mode) {
+            case 0:
+                if (pSortInfo.click === pSortInfo.Left) {
+                    pSortInfo.Right = pSortInfo.Left + 1;
+                    pSortInfo.Up = pSortInfo.Right;
+                    pSortInfo.ArrayUp[pSortInfo.Right] = pSortInfo.Array[pSortInfo.click];
+                    pSortInfo.Mode++;
+                }
+                break;
+            case 1:
+                if (pSortInfo.click === pSortInfo.Right) {
+                    if (pOriginal) {
+                        if (pSortInfo.ArrayUp[pSortInfo.Up] > pSortInfo.Array[pSortInfo.Right])
+                        {
+                            pSortInfo.Array[pSortInfo.Left] = pSortInfo.Array[pSortInfo.Right];
+                            pSortInfo.Array[pSortInfo.Right] = pSortInfo.ArrayUp[pSortInfo.Up];
+                            pSortInfo.ArrayUp[pSortInfo.Up+ 1] = pSortInfo.Array[pSortInfo.Left];                            
+                            pSortInfo.ArrayUp[pSortInfo.Up] = -1;
+                            pSortInfo.Up++;
+                            pSortInfo.Right++;
+                        }
+                    }
+                    else {
+                        if (pSortInfo.ArrayUp[pSortInfo.Up] <= pSortInfo.Array[pSortInfo.Right]) {
+                            pSortInfo.ArrayUp[pSortInfo.Up + 1] = pSortInfo.ArrayUp[pSortInfo.Up];
+                            pSortInfo.ArrayUp[pSortInfo.Up] = -1;
+                            pSortInfo.Up++;
+                            pSortInfo.Right++;
+                        }
+                    }
+                    if (pSortInfo.Right === pSortInfo.Array.length) {
+                        pSortInfo.Left++;
+                        pSortInfo.Right = -1;
+                        pSortInfo.Mode = 0;
+                    }
+                    if (pSortInfo.Left === pSortInfo.Array.length-1) {
+                        pSortInfo.Left = -1;
+                        pSortInfo.Mode = 3;
+                    }
+                }
+                break;
+        }
+        return pSortInfo;
+    };
     return this;
 }
