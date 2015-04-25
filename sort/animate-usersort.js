@@ -13,7 +13,8 @@ function UserSorting(sortingfunction, target) {
         "ArrayUp": [],
         "Left": -1,
         "Right": -1,
-        "Up": -1,
+        "UpLeft": -1,
+        "UpRight": -1,
         "click": -1,
         "Mode": 0
     };
@@ -25,7 +26,8 @@ function UserSorting(sortingfunction, target) {
         this.SortInfo.Left = this.SortingFunction.LeftStart;
         this.SortInfo.Right = this.SortingFunction.RightStart;
         this.SortInfo.click = -1;
-        this.SortInfo.Up = -1;
+        this.SortInfo.UpLeft = -1;
+        this.SortInfo.UpRight = -1;
         this.SortInfo.Mode = 0;
         _Steep = 0;
         updateAll(this);
@@ -42,30 +44,30 @@ function UserSorting(sortingfunction, target) {
 
     };
 
-    this.clickArray = function (Id) {      
-        this.SortInfo.click = Id;    
-        this.SortInfo = this.SortingFunction.onClick(this.SortInfo,true);      
+    this.clickArray = function (Id) {
+        this.SortInfo.click = Id;
+        this.SortInfo = this.SortingFunction.onClick(this.SortInfo, true);
         updateAll(this);
     };
-     this.clickArrayUp = function (Id) {   
-        this.SortInfo.click = Id;      
-        this.SortInfo = this.SortingFunction.onClick(this.SortInfo,false);    
+    this.clickArrayUp = function (Id) {
+        this.SortInfo.click = Id;
+        this.SortInfo = this.SortingFunction.onClick(this.SortInfo, false);
         updateAll(this);
     };
 
     this.getPosition = function (all) {
-           
+
         var lArray = this.SortInfo.Array;
         var lSteep = svgW / lArray.length;
         var lPositions = [];
-        for (var i = 0; i < lArray.length; i++) {  
-            if(lArray[i]!==-1 || all)
-                lPositions.push({v: i, l: lArray[i],up:0, p: {x: lSteep * i + 30, y: 60}});
-        }
-        lArray = this.SortInfo.ArrayUp;            
         for (var i = 0; i < lArray.length; i++) {
-           if(lArray[i]!==-1)
-                lPositions.push({v: i, l: lArray[i],up:1, p: {x: lSteep * i + 30, y: 20}});
+            if (lArray[i] !== -1 || all)
+                lPositions.push({v: i, l: lArray[i], up: 0, p: {x: lSteep * i + 30, y: 60}});
+        }
+        lArray = this.SortInfo.ArrayUp;
+        for (var i = 0; i < lArray.length; i++) {
+            if (lArray[i] !== -1)
+                lPositions.push({v: i, l: lArray[i], up: 1, p: {x: lSteep * i + 30, y: 20}});
         }
         return lPositions;
     };
@@ -84,21 +86,23 @@ function UserSorting(sortingfunction, target) {
         }).attr('cy', function (d) {
             return d.p.y;
         }).attr('r', vRad).on('click', function (d) {
-            if(d.up===0)
+            if (d.up === 0)
                 return pThis.clickArray(d.v);
             else
                 return pThis.clickArrayUp(d.v);
         }).attr('style', function (d) {
-                         
-                if (d.v === pThis.SortInfo.Left && pThis.SortInfo.Left >= 0 && d.up ===0)
-                    return 'stroke:green;stroke-width:4px;';
-                else if (d.v === pThis.SortInfo.Right && pThis.SortInfo.Right >= 0 && d.up ===0)
-                    return 'stroke:red;stroke-width:4px;';
-                else if (d.v === pThis.SortInfo.Up && pThis.SortInfo.Up >= 0 && d.up ===1)
-                    return 'stroke:red;stroke-width:4px;';
-                else
-                    return 'steelblue;stroke-width:2px;';
-           
+
+            if (d.v === pThis.SortInfo.Left && pThis.SortInfo.Left >= 0 && d.up === 0)
+                return 'stroke:green;stroke-width:4px;';
+            else if (d.v === pThis.SortInfo.Right && pThis.SortInfo.Right >= 0 && d.up === 0)
+                return 'stroke:red;stroke-width:4px;';
+            else if (d.v === pThis.SortInfo.UpLeft && pThis.SortInfo.UpLeft >= 0 && d.up === 1)
+                return 'stroke:green;stroke-width:4px;';
+            else if (d.v === pThis.SortInfo.UpRight && pThis.SortInfo.UpRight >= 0 && d.up === 1)
+                return 'stroke:red;stroke-width:4px;';
+            else
+                return 'steelblue;stroke-width:2px;';
+
         });
 
         //Nummerierung der Kreise	
@@ -109,11 +113,11 @@ function UserSorting(sortingfunction, target) {
         }).text(function (d) {
             return d.l;
         }).on('click', function (d) {
-            if(d.up===0)
+            if (d.up === 0)
                 return pThis.clickArray(d.v);
             else
                 return pThis.clickArrayUp(d.v);
-        });      
+        });
     };
     redraw = function (pThis) {
         var SortDiv = d3.select("#usersort" + pThis.Target);

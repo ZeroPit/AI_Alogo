@@ -13,7 +13,9 @@ and open the template in the editor.
         <script src="d3/d3.min.js"></script>
         <script src="sort/animate-usersort.js"></script>
         <script src="sort/insertionsort.js"></script>
-          <script src="sort/selectionsort.js"></script>
+        <script src="sort/selectionsort.js"></script>
+        <script src="sort/bubblesort.js"></script>
+        <script src="sort/mergesort.js"></script>
 
         <style>
             circle{fill:white;stroke:steelblue;stroke-width:2px;}
@@ -24,10 +26,15 @@ and open the template in the editor.
     </head>
     <body>
         <div><h2>Insertionsort</h2><section id="insertionsort"></section></div>
-         <div><h2>Selectionsort</h2><section id="selectionsort"></section></div>
+        <div><h2>Selectionsort</h2><section id="selectionsort"></section></div>
+        <div><h2>BubbleSort</h2><section id="bubblesort"></section></div>
+        <div><h2>MergeSorter</h2><section id="mergesorter"></section></div>
         <script>
-          var UserInsertionSorting = new UserSorting(new InsertionSort(), "insertionsort");
-          var UserSelectionSorting =  new UserSorting(new SelectionSort(), "selectionsort");                  
+            new UserSorting(new InsertionSort(), "insertionsort");
+            new UserSorting(new SelectionSort(), "selectionsort");
+            new UserSorting(new BubbleSort(), "bubblesort");
+            new UserSorting(new MergeSorter(), "mergesorter");
+
         </script>
     </body>
 </html>

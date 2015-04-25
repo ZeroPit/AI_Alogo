@@ -58,7 +58,7 @@ function SelectionSort() {
             case 0:
                 if (pSortInfo.click === pSortInfo.Left) {
                     pSortInfo.Right = pSortInfo.Left + 1;
-                    pSortInfo.Up = pSortInfo.Right;
+                    pSortInfo.UpLeft = pSortInfo.Right;
                     pSortInfo.ArrayUp[pSortInfo.Right] = pSortInfo.Array[pSortInfo.click];
                     pSortInfo.Mode++;
                 }
@@ -66,21 +66,21 @@ function SelectionSort() {
             case 1:
                 if (pSortInfo.click === pSortInfo.Right) {
                     if (pOriginal) {
-                        if (pSortInfo.ArrayUp[pSortInfo.Up] > pSortInfo.Array[pSortInfo.Right])
+                        if (pSortInfo.ArrayUp[pSortInfo.UpLeft] > pSortInfo.Array[pSortInfo.Right])
                         {
                             pSortInfo.Array[pSortInfo.Left] = pSortInfo.Array[pSortInfo.Right];
-                            pSortInfo.Array[pSortInfo.Right] = pSortInfo.ArrayUp[pSortInfo.Up];
-                            pSortInfo.ArrayUp[pSortInfo.Up+ 1] = pSortInfo.Array[pSortInfo.Left];                            
-                            pSortInfo.ArrayUp[pSortInfo.Up] = -1;
-                            pSortInfo.Up++;
+                            pSortInfo.Array[pSortInfo.Right] = pSortInfo.ArrayUp[pSortInfo.UpLeft];
+                            pSortInfo.ArrayUp[pSortInfo.UpLeft+ 1] = pSortInfo.Array[pSortInfo.Left];                            
+                            pSortInfo.ArrayUp[pSortInfo.UpLeft] = -1;
+                            pSortInfo.UpLeft++;
                             pSortInfo.Right++;
                         }
                     }
                     else {
-                        if (pSortInfo.ArrayUp[pSortInfo.Up] <= pSortInfo.Array[pSortInfo.Right]) {
-                            pSortInfo.ArrayUp[pSortInfo.Up + 1] = pSortInfo.ArrayUp[pSortInfo.Up];
-                            pSortInfo.ArrayUp[pSortInfo.Up] = -1;
-                            pSortInfo.Up++;
+                        if (pSortInfo.ArrayUp[pSortInfo.UpLeft] <= pSortInfo.Array[pSortInfo.Right]) {
+                            pSortInfo.ArrayUp[pSortInfo.UpLeft + 1] = pSortInfo.ArrayUp[pSortInfo.UpLeft];
+                            pSortInfo.ArrayUp[pSortInfo.UpLeft] = -1;
+                            pSortInfo.UpLeft++;
                             pSortInfo.Right++;
                         }
                     }

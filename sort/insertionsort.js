@@ -60,7 +60,7 @@ function InsertionSort() {
                 if (pSortInfo.click === pSortInfo.Left && pSortInfo.click === pSortInfo.Right) {
                     pSortInfo.ArrayUp[pSortInfo.click] = pSortInfo.Array[pSortInfo.click];
                     pSortInfo.Array[pSortInfo.click] = -1;
-                    pSortInfo.Up = pSortInfo.Left;
+                    pSortInfo.UpLeft = pSortInfo.Left;
                     pSortInfo.Mode++;
                 }
                 break;
@@ -72,7 +72,7 @@ function InsertionSort() {
                         pSortInfo.Array[pSortInfo.Left] = pSortInfo.Array[pSortInfo.click];
                         pSortInfo.Array[pSortInfo.click] = -1;
                         pSortInfo.Left--;
-                        pSortInfo.Up = pSortInfo.Left;
+                        pSortInfo.UpLeft = pSortInfo.Left;
                     }
                 }
                 else if (pSortInfo.Left === pSortInfo.click) {
@@ -85,7 +85,7 @@ function InsertionSort() {
                         pSortInfo.Array[pSortInfo.click] = pSortInfo.ArrayUp[pSortInfo.Left];
                         pSortInfo.ArrayUp[pSortInfo.Left] = -1;
                         pSortInfo.Right++;
-                        pSortInfo.Up = -1;
+                        pSortInfo.UpLeft = -1;
                         if (pSortInfo.Right === pSortInfo.Array.length) {
                             pSortInfo.Left = -1;
                             pSortInfo.Right = -1;

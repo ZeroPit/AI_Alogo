@@ -1,4 +1,8 @@
 function BubbleSort() {
+    /**
+     * Visual Sort
+     */
+
     var _Actions, _Array;
     this.sortAll = function (array) {
         _Actions = [];
@@ -26,5 +30,66 @@ function BubbleSort() {
             }
         }
     }
+
+
+    /**
+     * User Sort
+     */
+
+    this.LeftStart = 0;
+    this.RightStart = 1;
+
+    this.updateMode = function (pMode) {
+        /*
+         Methode:	
+         für i=0 bis n-2 wiederhole
+         für j=i+1 bis n-1 wiederhole
+         wenn a[j] < a[i]
+         vertausche a[i] mit a[j]
+         */
+        switch (pMode) {
+            case 0:
+                return "Wenn Grün > Rot dann klicke Grün sonst Rot";          
+            case 3:
+                return "Fertig";
+        }
+    };
+    this.onClick = function (pSortInfo, pOriginal) {
+        switch (pSortInfo.Mode) {
+            case 0:
+                if (pSortInfo.click === pSortInfo.Left) {
+                    if (pSortInfo.Array[pSortInfo.Left] > pSortInfo.Array[pSortInfo.Right]) {
+                        var t = pSortInfo.Array[pSortInfo.Left];
+                        pSortInfo.Array[pSortInfo.Left] = pSortInfo.Array[pSortInfo.Right];
+                        pSortInfo.Array[pSortInfo.Right] = t;
+                        pSortInfo.Right++;
+                        pSortInfo.Left++;
+                        pSortInfo.Up = -1;
+                    }
+                }
+                else if (pSortInfo.click === pSortInfo.Right) {
+                    if (pSortInfo.Array[pSortInfo.Left] <= pSortInfo.Array[pSortInfo.Right]) {
+                        pSortInfo.Right++;
+                        pSortInfo.Left++;
+                    }
+                }
+                
+                if (pSortInfo.Right === pSortInfo.Array.length) {
+
+                    if (pSortInfo.Up === -2) {
+                        pSortInfo.Left = -1;
+                        pSortInfo.Right = -1;
+                        pSortInfo.Mode = 3;
+                    }
+                    else {
+                        pSortInfo.Left = 0;
+                        pSortInfo.Right = 1;
+                        pSortInfo.Up = -2;
+                    }
+                }
+                break;
+        }
+        return pSortInfo;
+    };
     return this;
 }
