@@ -47,12 +47,12 @@ function UserSorting(sortingfunction, target) {
     this.clickArray = function (Id) {
         this.SortInfo.click = Id;
         this.SortInfo = this.SortingFunction.onClick(this.SortInfo, true);
-        updateAll(this);
+        redraw(this);
     };
     this.clickArrayUp = function (Id) {
         this.SortInfo.click = Id;
         this.SortInfo = this.SortingFunction.onClick(this.SortInfo, false);
-        updateAll(this);
+        redraw(this);
     };
 
     this.getPosition = function (all) {
@@ -134,7 +134,10 @@ function UserSorting(sortingfunction, target) {
         }).attr('cy', function (d) {
             return d.f.p.y;
         }).attr('r', vRad).on('click', function (d) {
-            return pThis.clickArray(d.v);
+            if (d.up === 0)
+                return pThis.clickArray(d.v);
+            else
+                return pThis.clickArrayUp(d.v);
         }).transition().duration(500).attr('cx', function (d) {
             return d.p.x;
         }).attr('cy', function (d) {
@@ -157,7 +160,10 @@ function UserSorting(sortingfunction, target) {
         }).text(function (d) {
             return d.l;
         }).on('click', function (d) {
-            return pThis.clickArray(d.v);
+            if (d.up === 0)
+                return pThis.clickArray(d.v);
+            else
+                return pThis.clickArrayUp(d.v);
         }).transition().duration(500).attr('x', function (d) {
             return d.p.x;
         }).attr('y', function (d) {

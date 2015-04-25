@@ -2,7 +2,7 @@
 function heapsort() {
     var svgW = 598, svgH = 300, vRad = 12;
     var tree = {cx: svgW / 2, cy: 30, w: 60, h: 70};
-    tree.vis = {v: 0, l: '?', p: {x: tree.cx, y: tree.cy}, c: []};
+    tree.vis = {v: 0, v2: 0, l: '?', p: {x: tree.cx, y: tree.cy}, c: []};
     tree.size = 1;
 
     var maxArray = 15;
@@ -13,7 +13,7 @@ function heapsort() {
     startNewAttempt = function ()
     {
         createNewArray();
-        tree.vis = {v: 0, l: heapArray[0], p: {x: tree.cx, y: tree.cy}, c: []};
+        tree.vis = {v: 0, v2: 0, l: heapArray[0], p: {x: tree.cx, y: tree.cy}, c: []};
         tree.size = 1;
         treeFin = false;
         updateAll();
@@ -77,7 +77,6 @@ function heapsort() {
         {
             if (leafId !== getNextLeaf(-1))
             {
-                treeFin = true;
                 alert("Der Baum ist noch nicht fertig");
             }
             else
@@ -215,15 +214,15 @@ function heapsort() {
     getVertices = function () {
         var v = [];
         function getVert(t, f) {
-            v.push({v: t.v, l: t.l, p: t.p, f: f});
+            v.push({v: t.v, v2: t.v2, l: t.l, p: t.p, f: f});
             t.c.forEach(function (d) {
-                return getVert(d, {v: t.v, p: t.p});
+                return getVert(d, {v: t.v, v2: t.v2, p: t.p});
             });
         }
 
         getVert(tree.vis, {});
         return v.sort(function (a, b) {
-            return a.v - b.v;
+            return a.v2 - b.v2;
         });
     };
 
@@ -244,7 +243,7 @@ function heapsort() {
     addLeaf = function (leafId) {
         function add(t) {
             if (t.v === leafId) {
-                t.c.push({v: tree.size++, l: heapArray[tree.size - 1], p: {}, c: []});
+                t.c.push({v: tree.size++, v2: tree.size, l: heapArray[tree.size - 1], p: {}, c: []});
                 return;
             }
             t.c.forEach(add);
@@ -315,13 +314,18 @@ function heapsort() {
 
         function change(t) {
             if (t.v === leafId1) {
+                var v2 = t.v2;
                 var l = t.l;
                 if (t.c[0].v === leafId2) {
+                    t.v2 = t.c[0].v2;
+                    t.c[0].v2 = v2;
                     t.l = t.c[0].l;
                     t.c[0].l = l;
                 }
                 else
                 {
+                    t.v2 = t.c[1].v2;
+                    t.c[1].v2 = v2;
                     t.l = t.c[1].l;
                     t.c[1].l = l;
                 }
