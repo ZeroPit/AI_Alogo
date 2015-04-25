@@ -16,7 +16,8 @@ function UserSorting(sortingfunction, target) {
         "UpLeft": -1,
         "UpRight": -1,
         "click": -1,
-        "Mode": 0
+        "Mode": 0,
+        "Update": true
     };
     var _Steep;
 
@@ -29,6 +30,7 @@ function UserSorting(sortingfunction, target) {
         this.SortInfo.UpLeft = -1;
         this.SortInfo.UpRight = -1;
         this.SortInfo.Mode = 0;
+        this.SortInfo.Update = true;
         _Steep = 0;
         updateAll(this);
     };
@@ -47,14 +49,21 @@ function UserSorting(sortingfunction, target) {
     this.clickArray = function (Id) {
         this.SortInfo.click = Id;
         this.SortInfo = this.SortingFunction.onClick(this.SortInfo, true);
-        redraw(this);
+        if(this.SortInfo.Update)
+            updateAll(this);
+        else
+            redraw(this);
     };
     this.clickArrayUp = function (Id) {
         this.SortInfo.click = Id;
         this.SortInfo = this.SortingFunction.onClick(this.SortInfo, false);
-        redraw(this);
+        if(this.SortInfo.Update)
+            updateAll(this);
+        else
+            redraw(this);
     };
 
+   
     this.getPosition = function (all) {
 
         var lArray = this.SortInfo.Array;
@@ -62,13 +71,14 @@ function UserSorting(sortingfunction, target) {
         var lPositions = [];
         for (var i = 0; i < lArray.length; i++) {
             if (lArray[i] !== -1 || all)
-                lPositions.push({v: i, l: lArray[i], up: 0, p: {x: lSteep * i + 30, y: 60}});
+                lPositions.push({v: i, l: lArray[i], up: 0, p: {x: lSteep * i + 30, y: 60},p2: {x: lSteep * i + 30, y: 60}});
         }
         lArray = this.SortInfo.ArrayUp;
         for (var i = 0; i < lArray.length; i++) {
             if (lArray[i] !== -1)
-                lPositions.push({v: i, l: lArray[i], up: 1, p: {x: lSteep * i + 30, y: 20}});
+                lPositions.push({v: i, l: lArray[i], up: 1, p: {x: lSteep * i + 30, y: 20},p2: {x: lSteep * i + 30, y: 20}});
         }
+        
         return lPositions;
     };
 
@@ -121,18 +131,31 @@ function UserSorting(sortingfunction, target) {
     };
     redraw = function (pThis) {
         var SortDiv = d3.select("#usersort" + pThis.Target);
-        var circles = SortDiv.select("#sortsvg").select("#g_circles").selectAll('circle').data(getPosition());
+        var circles = SortDiv.select("#sortsvg").select("#g_circles").selectAll('circle').data(pThis.getPosition(true));
 
         circles.transition().duration(500).attr('cx', function (d) {
             return d.p.x;
         }).attr('cy', function (d) {
             return d.p.y;
+        }).attr('style', function (d) {
+
+            if (d.v === pThis.SortInfo.Left && pThis.SortInfo.Left >= 0 && d.up === 0)
+                return 'stroke:green;stroke-width:4px;';
+            else if (d.v === pThis.SortInfo.Right && pThis.SortInfo.Right >= 0 && d.up === 0)
+                return 'stroke:red;stroke-width:4px;';
+            else if (d.v === pThis.SortInfo.UpLeft && pThis.SortInfo.UpLeft >= 0 && d.up === 1)
+                return 'stroke:green;stroke-width:4px;';
+            else if (d.v === pThis.SortInfo.UpRight && pThis.SortInfo.UpRight >= 0 && d.up === 1)
+                return 'stroke:red;stroke-width:4px;';
+            else
+                return 'steelblue;stroke-width:2px;';
+
         });
 
         circles.enter().append('circle').attr('cx', function (d) {
-            return d.f.p.x;
+            return d.p2.x;
         }).attr('cy', function (d) {
-            return d.f.p.y;
+            return d.p2.y;
         }).attr('r', vRad).on('click', function (d) {
             if (d.up === 0)
                 return pThis.clickArray(d.v);
@@ -142,9 +165,22 @@ function UserSorting(sortingfunction, target) {
             return d.p.x;
         }).attr('cy', function (d) {
             return d.p.y;
+        }).attr('style', function (d) {
+
+            if (d.v === pThis.SortInfo.Left && pThis.SortInfo.Left >= 0 && d.up === 0)
+                return 'stroke:green;stroke-width:4px;';
+            else if (d.v === pThis.SortInfo.Right && pThis.SortInfo.Right >= 0 && d.up === 0)
+                return 'stroke:red;stroke-width:4px;';
+            else if (d.v === pThis.SortInfo.UpLeft && pThis.SortInfo.UpLeft >= 0 && d.up === 1)
+                return 'stroke:green;stroke-width:4px;';
+            else if (d.v === pThis.SortInfo.UpRight && pThis.SortInfo.UpRight >= 0 && d.up === 1)
+                return 'stroke:red;stroke-width:4px;';
+            else
+                return 'steelblue;stroke-width:2px;';
+
         });
 
-        var labels = SortDiv.select("#sortsvg").select("#g_labels").selectAll('text').data(getPosition());
+        var labels = SortDiv.select("#sortsvg").select("#g_labels").selectAll('text').data(pThis.getPosition(false));
         labels.text(function (d) {
             return d.l;
         }).transition().duration(500).attr('x', function (d) {
@@ -154,9 +190,9 @@ function UserSorting(sortingfunction, target) {
         });
 
         labels.enter().append('text').attr('x', function (d) {
-            return d.f.p.x;
+            return d.p2.x;
         }).attr('y', function (d) {
-            return d.f.p.y + 5;
+            return d.p2.y + 5;
         }).text(function (d) {
             return d.l;
         }).on('click', function (d) {

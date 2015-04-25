@@ -62,6 +62,7 @@ function InsertionSort() {
                     pSortInfo.Array[pSortInfo.click] = -1;
                     pSortInfo.UpLeft = pSortInfo.Left;
                     pSortInfo.Mode++;
+                    pSortInfo.Update = true;
                 }
                 break;
             case 2:
@@ -73,6 +74,7 @@ function InsertionSort() {
                         pSortInfo.Array[pSortInfo.click] = -1;
                         pSortInfo.Left--;
                         pSortInfo.UpLeft = pSortInfo.Left;
+                        pSortInfo.Update = false;
                     }
                 }
                 else if (pSortInfo.Left === pSortInfo.click) {
@@ -94,6 +96,7 @@ function InsertionSort() {
                         else
                             pSortInfo.Mode = 0;
                     }
+                     pSortInfo.Update = true;
                 }
                 break;
         }

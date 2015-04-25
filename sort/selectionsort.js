@@ -61,10 +61,12 @@ function SelectionSort() {
                     pSortInfo.UpLeft = pSortInfo.Right;
                     pSortInfo.ArrayUp[pSortInfo.Right] = pSortInfo.Array[pSortInfo.click];
                     pSortInfo.Mode++;
+                    pSortInfo.Update = true;
                 }
                 break;
             case 1:
                 if (pSortInfo.click === pSortInfo.Right) {
+                    pSortInfo.Update = false;
                     if (pOriginal) {
                         if (pSortInfo.ArrayUp[pSortInfo.UpLeft] > pSortInfo.Array[pSortInfo.Right])
                         {
@@ -74,7 +76,7 @@ function SelectionSort() {
                             pSortInfo.ArrayUp[pSortInfo.UpLeft] = -1;
                             pSortInfo.UpLeft++;
                             pSortInfo.Right++;
-                        }
+                        }                       
                     }
                     else {
                         if (pSortInfo.ArrayUp[pSortInfo.UpLeft] <= pSortInfo.Array[pSortInfo.Right]) {
@@ -88,10 +90,12 @@ function SelectionSort() {
                         pSortInfo.Left++;
                         pSortInfo.Right = -1;
                         pSortInfo.Mode = 0;
+                        pSortInfo.Update = true;
                     }
                     if (pSortInfo.Left === pSortInfo.Array.length-1) {
                         pSortInfo.Left = -1;
                         pSortInfo.Mode = 3;
+                        pSortInfo.Update = true;
                     }
                 }
                 break;
