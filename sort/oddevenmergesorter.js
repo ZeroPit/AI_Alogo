@@ -15,7 +15,7 @@ function OddEvenMergeSorter() {
     }
     function oddEvenMergeSort(lo, n) {
         if (n > 1) {
-            var m = ~~(n / 2);
+            var m = n >>1 ;
             oddEvenMergeSort(lo, m);
             oddEvenMergeSort(lo + m, m);
             oddEvenMerge(lo, n, 1);

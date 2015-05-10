@@ -16,7 +16,7 @@ function BitonicSorter() {
     }
     function bitonicSort(lo, n, dir) {
         if (n > 1) {
-            var m = ~~(n / 2);
+            var m = n >>1 ;
             bitonicSort(lo, m, !dir);
             bitonicSort(lo + m, n - m, dir);
             bitonicMerge(lo, n, dir);
@@ -24,7 +24,7 @@ function BitonicSorter() {
     }
     function bitonicMerge(lo, n, dir) {
         if (n > 1) {
-            var m = ~~(n / 2);
+            var m = n >>1 ;
             for (var i = lo; i < lo + n-m; i++)
                 compare(i, i + m, dir);
             bitonicMerge(lo, m, dir);

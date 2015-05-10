@@ -14,7 +14,7 @@ function MergeSorter() {
 
     function mergesort(lo, hi) {
         if (lo < hi) {
-            var m = ~~((lo + hi) / 2);
+            var m = (lo + hi)>>1 ;
             if (m >= 1) {
                 mergesort(lo, m);
                 mergesort(m + 1, hi);

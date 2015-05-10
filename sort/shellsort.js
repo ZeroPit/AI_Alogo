@@ -15,7 +15,7 @@ function ShellSort() {
     }
     function shellsort() {
         var i, j;
-        var m = ~~((_Array.length) / 2);
+        var m = (_Array.length)>>1 ;
         while (m > 0) {
             for (i = m; i < _Array.length; i++) {
                 _Actions.push({type: "traverse", "traverse": i});

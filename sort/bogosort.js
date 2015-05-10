@@ -11,7 +11,7 @@ function Bogosort() {
     function shuffle() {
         var i = _Array.length, j, t;
         while (--i > 0) {
-            j = ~~(Math.random() * (i + 1));
+            j = (2*(Math.random() * (i + 1)))>>1;
             t = _Array[j];
             _Array[j] = _Array[i];
             _Array[i] = t;

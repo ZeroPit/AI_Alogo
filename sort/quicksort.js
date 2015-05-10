@@ -16,7 +16,7 @@ function Quicksort() {
     function recurse(left, right) {
         var i = left, j = right;
         // Vergleichs�element x           
-        var x = _Array[ ~~((left + right) / 2)];
+        var x = _Array[ (left + right)>> 1 ];
         _Actions.push({type: "partition", pivot: x});
         //  Aufteilung
         while (i <= j) {
