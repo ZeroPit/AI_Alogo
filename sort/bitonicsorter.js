@@ -24,7 +24,7 @@ function BitonicSorter() {
     }
     function bitonicMerge(lo, n, dir) {
         if (n > 1) {
-            var m = n >>1 ;
+            var m = greatestPowerOfTwoLessThan(n);
             for (var i = lo; i < lo + n-m; i++)
                 compare(i, i + m, dir);
             bitonicMerge(lo, m, dir);
@@ -35,5 +35,14 @@ function BitonicSorter() {
         if (dir === (_Array[i] > _Array[j]))
             swap(i, j);
     }
+
+	function greatestPowerOfTwoLessThan(n)
+	{
+		var k = 1;
+		while(k < n)
+			k = k << 1;
+		return k >> 1;
+	}
+
     return this;
 }

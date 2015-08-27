@@ -13,7 +13,7 @@ var SortingAnimation3 = function() {
 
     var ret = {};
     var margin = {top: 10, right: 10, bottom: 10, left: 10};
-    var maxSteps = 100;
+    var maxSteps = 64;
     var widthHeight = 200 - margin.left - margin.right;
 
     var z = (widthHeight - margin.left - margin.right) / maxSteps;
