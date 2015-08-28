@@ -5,7 +5,6 @@ function BitonicSorter() {
         _Array = array.slice();
         bitonicSort(0, _Array.length, ASCENDING);
         _Actions.push({type: "done", "done": 0});
-        console.log(_Array);
         return _Actions;
     };
     function swap(i, j) {
