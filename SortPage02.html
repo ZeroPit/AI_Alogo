@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8"> 
+    <title>Alte Sortierverfahren Ansicht</title>
     <link rel="stylesheet" href="css/sortStyle.css">
-    <script src="sort/sort.js"></script>
-
+    <script src="js/sort.js"></script>    
 </head>
 <body>    
     <h1>Einstellungen</h1>
@@ -50,8 +50,7 @@
         <div class="SortArea"><h2>Mergesort</h2><section id="mergesort"></section></div> 
         <div class="SortArea"><h2>Bogosort</h2><section id="bogosort"></section></div> 
     </div>
-    <script>
-        includeAll();
+    <script>      
         window.onload = function ()
         {
             addToSortOld("#bubblesort", eSort.bubblesort);

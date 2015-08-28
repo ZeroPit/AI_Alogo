@@ -1,12 +1,16 @@
 
-function heapsort() {
-    var svgW = 598, svgH = 300, vRad = 12;
+function heapsortTree(pTarget) {
+
+    var target = pTarget;
+    var svgW = 598, svgH = 300, vRad = 15;
     var tree = {cx: svgW / 2, cy: 30, w: 60, h: 70};
     tree.vis = {v: 0, v2: 0, l: '?', p: {x: tree.cx, y: tree.cy}, c: []};
     tree.size = 1;
 
     var maxArray = 15;
+    var startHeapArray = [];
     var heapArray = [];
+    var endHeapArray = [];
     var treeFin = false;
     var leafFocus = 0;
 
@@ -17,6 +21,8 @@ function heapsort() {
         tree.size = 1;
         treeFin = false;
         updateAll();
+        drawStartArrayDiv();
+        drawEndArrayDiv();
     };
 
     createTree = function () {
@@ -45,8 +51,11 @@ function heapsort() {
     createNewArray = function () {
         heapArray = [];
         var lMax = Math.floor((Math.random() * (maxArray - 7)) + 8);
-        for (var i = 0; i < lMax; i++)
+        for (var i = 0; i < lMax; i++) {
             heapArray.push(Math.floor((Math.random() * lMax) + 1));
+            endHeapArray.push(-1);
+        }
+        startHeapArray = heapArray.slice();
     };
     clickLeaf = function (leafId) {
         if (tree.size >= heapArray.length || treeFin)
@@ -399,54 +408,66 @@ function heapsort() {
         edges.transition().duration(500)
                 .attr('x1', function (d) {
                     return d.p1.x;
-                }).attr('y1', function (d) {
-            return d.p1.y;
-        })
+                })
+                .attr('y1', function (d) {
+                    return d.p1.y;
+                })
                 .attr('x2', function (d) {
                     return d.p2.x;
-                }).attr('y2', function (d) {
-            return d.p2.y;
-        });
+                })
+                .attr('y2', function (d) {
+                    return d.p2.y;
+                });
 
         edges.enter().append('line')
                 .attr('x1', function (d) {
                     return d.p1.x;
-                }).attr('y1', function (d) {
-            return d.p1.y;
-        })
+                })
+                .attr('y1', function (d) {
+                    return d.p1.y;
+                })
                 .attr('x2', function (d) {
                     return d.p1.x;
-                }).attr('y2', function (d) {
-            return d.p1.y;
-        })
+                })
+                .attr('y2', function (d) {
+                    return d.p1.y;
+                })
                 .transition().duration(500)
                 .attr('x2', function (d) {
                     return d.p2.x;
-                }).attr('y2', function (d) {
-            return d.p2.y;
-        });
+                })
+                .attr('y2', function (d) {
+                    return d.p2.y;
+                });
 
         var circles = d3.select("#g_circles").selectAll('circle').data(getVertices());
 
-        circles.transition().duration(500).attr('cx', function (d) {
-            return d.p.x;
-        }).attr('cy', function (d) {
-            return d.p.y;
-        });
+        circles.transition().duration(500)
+                .attr('cx', function (d) {
+                    return d.p.x;
+                })
+                .attr('cy', function (d) {
+                    return d.p.y;
+                });
 
-        circles.enter().append('circle').attr('cx', function (d) {
-            return d.f.p.x;
-        }).attr('cy', function (d) {
-            return d.f.p.y;
-        }).attr('r', vRad)
+        circles.enter().append('circle')
+                .attr('cx', function (d) {
+                    return d.f.p.x;
+                })
+                .attr('cy', function (d) {
+                    return d.f.p.y;
+                })
+                .attr('r', vRad)
                 .on('click', function (d) {
                     return clickLeaf(d.v);
                 })
-                .transition().duration(500).attr('cx', function (d) {
-            return d.p.x;
-        }).attr('cy', function (d) {
-            return d.p.y;
-        });
+                .transition().duration(500)
+                .attr('cx', function (d) {
+                    return d.p.x;
+                })
+                .attr('cy', function (d) {
+                    return d.p.y;
+                });
 
         var labels = d3.select("#g_labels").selectAll('text').data(getVertices());
 
@@ -496,29 +517,111 @@ function heapsort() {
         });
     };
 
+    getPosition = function (pStart) {
+        var lSteep = svgW / startHeapArray.length;
+        var lPositions = [];
+
+        if (pStart) {
+            for (var i = 0; i < startHeapArray.length; i++) {
+                lPositions.push({v: i, l: startHeapArray[i], up: 1, p: {x: lSteep * i + 30, y: 20}, p2: {x: lSteep * i + 30, y: 20}});
+            }
+        }
+        else
+        {
+            for (var i = 0; i < endHeapArray.length; i++) {
+                lPositions.push({v: i, l: endHeapArray[i], up: 0, p: {x: lSteep * i + 30, y: 20}, p2: {x: lSteep * i + 30, y: 20}});
+            }
+        }
+        return lPositions;
+    };
+    drawStartArrayDiv = function ()
+    {
+        var SortDiv = d3.select("#startArraydiv");
+        //Löscht die alten Elemente      
+        SortDiv.select("#startArraySvg").select("#g_circles2").remove();
+        SortDiv.select("#startArraySvg").select("#g_labels2").remove();
+
+        //Kreise
+        SortDiv.select("#startArraySvg").append('g').attr('id', 'g_circles2').selectAll('circle').data(getPosition(true)).enter().append('circle')
+                .attr('cx', function (d) {
+                    return d.p.x;
+                })
+                .attr('cy', function (d) {
+                    return d.p.y;
+                })
+                .attr('r', vRad);
+
+        //Nummerierung der Kreise	
+        SortDiv.select("#startArraySvg").append('g').attr('id', 'g_labels2').selectAll('text').data(getPosition(true)).enter().append('text')
+                .attr('x', function (d) {
+                    return d.p.x;
+                })
+                .attr('y', function (d) {
+                    return d.p.y + 5;
+                })
+                .text(function (d) {
+                    return d.l;
+                });
+    };
+    drawEndArrayDiv = function ()
+    {
+        var SortDiv = d3.select("#endArraydiv");
+        //Löscht die alten Elemente      
+        SortDiv.select("#endArraySvg").select("#g_circles2").remove();
+        SortDiv.select("#endArraySvg").select("#g_labels2").remove();
+
+        //Kreise
+        SortDiv.select("#endArraySvg").append('g').attr('id', 'g_circles2').selectAll('circle').data(getPosition(false)).enter().append('circle')
+                .attr('cx', function (d) {
+                    return d.p.x;
+                })
+                .attr('cy', function (d) {
+                    return d.p.y;
+                })
+                .attr('r', vRad);
+
+        //Nummerierung der Kreise	
+        SortDiv.select("#endArraySvg").append('g').attr('id', 'g_labels2').selectAll('text').data(getPosition(false)).enter().append('text')
+                .attr('x', function (d) {
+                    return d.p.x;
+                })
+                .attr('y', function (d) {
+                    return d.p.y + 5;
+                })
+                .text(function (d) {
+                    return d.l;
+                });
+    };
+
+
     initialize = function () {
-        //HeapSort
-        d3.select("body").append("div").attr('id', 'heapsort');
-        //Array Anzeige
-        d3.select("#heapsort").append("div").attr('id', 'arraydiv');
+
+        //Start Array Anzeige 
+        d3.select(target).append("div").attr('id', 'startArraydiv').append("svg").attr("width", svgW + 10).attr("height", 40).attr('id', 'startArraySvg');
+
         //Baum
-        d3.select("#heapsort").append("svg").attr("width", svgW).attr("height", svgH).attr('id', 'treesvg');
+        d3.select(target).append("svg").attr("width", svgW + 10).attr("height", svgH).attr('id', 'treesvg');
+        
+        //End Array Anzeige 
+        d3.select(target).append("div").attr('id', 'endArraydiv').append("svg").attr("width", svgW + 10).attr("height", 40).attr('id', 'endArraySvg');
         startNewAttempt();
+        
         //Button
-        d3.select("#heapsort").append("div").attr('id', 'buttondiv');
-        d3.select("#buttondiv").append("button").attr('type', 'button').attr('style', 'width:190px').text('Neuer Veruch')
+        d3.select(target).append("div").attr('id', 'buttondiv');
+
+        d3.select("#buttondiv").append("button").attr('type', 'button').attr('class', 'button orange').attr('style', 'width:250px').text('Neuer Veruch')
                 .on('click', function (d) {
                     return startNewAttempt();
                 });
-        d3.select("#buttondiv").append("button").attr('type', 'button').attr('style', 'width:190px; margin-left:15px').text('Baum Erstellen')
+        d3.select("#buttondiv").append("button").attr('type', 'button').attr('class', 'button orange').attr('style', 'width:250px; float:right').text('Baum Erstellen')
                 .on('click', function (d) {
                     return createTree();
                 });
-        d3.select("#buttondiv").append("button").attr('type', 'button').attr('style', 'width:190px; margin-left:15px').text('Baum Lösen')
+        d3.select("#buttondiv").append("button").attr('type', 'button').attr('class', 'button orange').attr('style', 'width:250px;  margin-top: 10px;').text('Baum Lösen')
                 .on('click', function (d) {
                     return finTree();
                 });
-        d3.select("#buttondiv").append("button").attr('type', 'button').attr('style', 'width:190px; margin-left:15px').text('Nächster Schritt')
+        d3.select("#buttondiv").append("button").attr('type', 'button').attr('class', 'button orange').attr('style', 'width:250px; float:right; margin-top: 10px;').text('Nächster Schritt')
                 .on('click', function (d) {
                     return startHeapSort(true);
                 });
@@ -527,4 +630,4 @@ function heapsort() {
 
     return this;
 }
-var heapsort = heapsort();
+

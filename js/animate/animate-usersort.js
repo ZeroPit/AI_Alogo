@@ -49,7 +49,7 @@ function UserSorting(sortingfunction, target) {
     this.clickArray = function (Id) {
         this.SortInfo.click = Id;
         this.SortInfo = this.SortingFunction.onClick(this.SortInfo, true);
-        if(this.SortInfo.Update)
+        if (this.SortInfo.Update)
             updateAll(this);
         else
             redraw(this);
@@ -57,13 +57,13 @@ function UserSorting(sortingfunction, target) {
     this.clickArrayUp = function (Id) {
         this.SortInfo.click = Id;
         this.SortInfo = this.SortingFunction.onClick(this.SortInfo, false);
-        if(this.SortInfo.Update)
+        if (this.SortInfo.Update)
             updateAll(this);
         else
             redraw(this);
     };
 
-   
+
     this.getPosition = function (all) {
 
         var lArray = this.SortInfo.Array;
@@ -71,14 +71,14 @@ function UserSorting(sortingfunction, target) {
         var lPositions = [];
         for (var i = 0; i < lArray.length; i++) {
             if (lArray[i] !== -1 || all)
-                lPositions.push({v: i, l: lArray[i], up: 0, p: {x: lSteep * i + 30, y: 60},p2: {x: lSteep * i + 30, y: 60}});
+                lPositions.push({v: i, l: lArray[i], up: 0, p: {x: lSteep * i + 30, y: 60}, p2: {x: lSteep * i + 30, y: 60}});
         }
         lArray = this.SortInfo.ArrayUp;
         for (var i = 0; i < lArray.length; i++) {
             if (lArray[i] !== -1)
-                lPositions.push({v: i, l: lArray[i], up: 1, p: {x: lSteep * i + 30, y: 20},p2: {x: lSteep * i + 30, y: 20}});
+                lPositions.push({v: i, l: lArray[i], up: 1, p: {x: lSteep * i + 30, y: 20}, p2: {x: lSteep * i + 30, y: 20}});
         }
-        
+
         return lPositions;
     };
 
@@ -95,7 +95,8 @@ function UserSorting(sortingfunction, target) {
             return d.p.x;
         }).attr('cy', function (d) {
             return d.p.y;
-        }).attr('r', vRad).on('click', function (d) {
+        }).attr('r', vRad)
+                .on('click', function (d) {
             if (d.up === 0)
                 return pThis.clickArray(d.v);
             else

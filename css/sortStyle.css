@@ -1,22 +1,33 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
 /* 
-    Created on : 28.08.2015, 00:16:05
-    Author     : Peter and Denny
+    File name  : sortSytle.css
+    Created on : 2015
+    Author     : Peter Steensen (550020) and Denny Lüttschwager (343709)
+    Project    : JavaScript anstelle Java-Applet
+    Prof       : Prof. Lang
 */
 
 body {
     font-family: "Helvetica Neue", Helvetica, sans-serif; 
+    width:960px;
+    margin:10px auto;
 }
+line {  
+    fill: none;  
+    stroke: #000;  
+    stroke-width: 10px;
+}
+line.pivot {  
+    stroke: 'pink';  
+    opacity: 1;
+}
+
+
 
 .SortArea {
     float: left;
     width: 250px;
-     display: inline-block;     
-     cursor: pointer;
+    display: inline-block;     
+    cursor: pointer;
 }
 
 #settings{
@@ -28,18 +39,43 @@ body {
 }
 #sortDesplay{
     width: 1000px; 
-     height: 800px;
-     border: solid 5px #da7c0c;
+    height: 800px;
+    border: solid 5px #da7c0c;
     padding: 5px;
     border-radius: .5em;
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
 #sortDesplayNew{  
-     width: 800px; 
+    width: 800px; 
     padding: 80px 0 0 40px;
-     border: solid 5px #da7c0c;
+    border: solid 5px #da7c0c;
     padding: 5px;
     border-radius: .5em;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+/* Heapsort Baum CSS*/
+#treesvg g circle ,#startArraySvg g circle,#endArraySvg g circle{
+    fill:white;
+    stroke:#f78d1d;
+    stroke-width:4px;
+}
+#treesvg g line{
+    stroke:grey;
+    stroke-width:3px;
+   
+}
+#g_labels text,#g_labels2 text{
+    text-anchor:middle;
+}
+#treesvg g text:hover, #treesvg g circle:hover{
+    cursor:pointer;
+}
+#treesvg, #startArraydiv,#endArraydiv, #buttondiv{
+    width: 620px;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: solid 5px #da7c0c;   
+    border-radius: .5em;    
     box-shadow: 0 1px 2px rgba(0,0,0,.2);
 }
 
@@ -112,7 +148,7 @@ body {
     padding: 6px 8px 6px 10px;
     font-size: 20px;	
     font-weight: bold;
-     text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
     border: 0px;   
     -webkit-appearance: none; 
     background: #f78d1d;

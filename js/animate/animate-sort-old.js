@@ -1,18 +1,34 @@
 //Sortierte Animation eines Array auf der Sich von X und Y Achse
+/*
+ * 
+ * @param {int[]} pArray
+ * Das zu sortierende Array 
+ * 
+ * @param {int} pMaxSteps
+ * Anzahl der enthaltenden Werte
+ * 
+ * @returns {SortingAnimationNew.ret}
+ */
 function SortingAnimationOld(pArray, pMaxSteps) {
     //Variablen
     var ret = {};
     var allActions = [];
     var rects = [];
-    
+
     var maxSteps = pMaxSteps;
     var srcData = pArray;
-    
+
     var margin = {top: 10, right: 10, bottom: 10, left: 10};
     var widthHeight = 200 - margin.left - margin.right;
     var z = (widthHeight - margin.left - margin.right) / maxSteps;
 
-    //Start der Ausgabe der Aniamtion der mittels delay der einszelenen Schritte
+    /*
+     * Startet die Ausgabe der Sortierten Stacks
+     * @param {type} delay
+     * das delay gibt an wie lange gewartet werden soll bis es gestartet werden soll nach dem Start ausgeführt wurden ist 
+     * 
+     * @returns {undefined}
+     */
     ret.start = function (delay) {
         setTimeout(
                 function () {
@@ -39,13 +55,25 @@ function SortingAnimationOld(pArray, pMaxSteps) {
                     }, 1);
                 }, delay);
     };
-    
-    ret.reset = function (){
+    /*
+     * Resetet die Ausgabe bevor man die Function Start ausführt.
+     * @returns {undefined}
+     */
+    ret.reset = function () {
         allActions = [];
         rects = [];
     };
-    
-    //Erstellung des zu Sortierenden Animation
+
+    /*
+     * Hinzufügen des zu Sortierenden Animation
+     * 
+     * sortingfunction
+     * Sortierfunktion die das gesamte Array Sortiert 
+     * und die Einzelen Schritte als Stack zurück gibt
+     * 
+     * target (String) "#target"
+     * ID des  <section> Tags
+     */
     ret.add = function (sortingfunction, target) {
         //Erzeugung einer Kopie des genutzten Arrays 
         var data = srcData.slice();
@@ -66,7 +94,7 @@ function SortingAnimationOld(pArray, pMaxSteps) {
                 })
                 .attr("width", z)
                 .attr("height", z)
-                .style("fill", "black"); 
+                .style("fill", "black");
         //Sortierung des Arrays und Speicherung des Stacks in der Variable actions, sodass die Sortierung animiert werden kann
         var actions = sortingfunction(data, maxSteps).reverse();
         allActions.push({actions: actions});

@@ -4,13 +4,20 @@
  * and open the template in the editor.
  */
 
+/*
+ * ArrayTyp Enum
+ * @type int
+ */
 var eArrayTyp = {
     Random: 0,
     Up: 1,
     Down: 2,
     RandomOneToHundred: 3
 };
-
+/*
+ * Sort Enum
+ * @type type
+ */
 var eSort = {
     bubblesort: 0,
     selectionsort: 1,
@@ -25,33 +32,52 @@ var eSort = {
     bogosort: 10
 };
 
-
+/*
+ * Läde alle benötigten JS Datei nach 
+ * sodass sie nicht in der HTML gesetzt werden müssen
+ * @returns {undefined}
+ */
 function includeAll() {
     //D3js für die verarbeitung
-    include('d3/d3.min.js');
+    include('js/d3/d3.min.js');
 
     //Sortier Anzeigen
-    include('sort/animate-sort-new.js');
-    include('sort/animate-sort-old.js');
-    include('sort/animate-sort2.js');
+    include('js/animate/animate-sort-new.js');
+    include('js/animate/animate-sort-old.js');
+    include('js/animate/animate-sort2.js');  
+    include('js/animate/animate-heapsort.js');    
+   
 
     //Sortierverfahren
-    include('sort/bubblesort.js');
-    include('sort/selectionsort.js');
-    include('sort/insertionsort.js');
-    include('sort/shellsort.js');
-    include('sort/quicksort.js');
-    include('sort/heapsorter.js');
-    include('sort/mergesort.js');
-    include('sort/bitonicsorter.js');
-    include('sort/oddeventranspositionsort.js');
-    include('sort/oddevenmergesorter.js');
-    include('sort/bogosort.js');
+    include('js/sort/bubblesort.js');
+    include('js/sort/selectionsort.js');
+    include('js/sort/insertionsort.js');
+    include('js/sort/shellsort.js');
+    include('js/sort/quicksort.js');
+    include('js/sort/heapsort.js');
+    include('js/sort/mergesort.js');
+    include('js/sort/bitonicsort.js');
+    include('js/sort/oddeventranspositionsort.js');
+    include('js/sort/oddevenmergesort.js');
+    include('js/sort/bogosort.js');
+    
 }
-function include(file) {
-    document.write('<script type="text/javascript" src="' + file + '"></script>');
+/*
+ * Schreibt die JS Datei an die position 
+ * an der die  sort.js Datei ausgeführt wird
+ * @param {string} pFile
+ * @returns {undefined}
+ */
+function include(pFile) {
+    document.write('<script type="text/javascript" src="' + pFile + '"></script>');
 }
+includeAll();
 
+/*
+ * Erzeugt die entsprechende Klasse
+ * @param {type} pSortID
+ * @returns {Bogosort|SelectionSort|Quicksort|ShellSort|BubbleSort|OddEvenTranspositionSort|MergeSorter|BitonicSorter|InsertionSort|Heapsort|OddEvenMergeSorter}
+ */
 function getSortClass(pSortID) {
     switch (pSortID) {
         case eSort.bubblesort:
@@ -90,50 +116,64 @@ function getSortClass(pSortID) {
     }
 }
 
-
-// Erstellung eines Array für die Sortierung
-//
-// pArrayTyp siehe eArrayTyp
-//
-// pMaxSteps Sollte immer ein Vierfaches von 2 sein zum Beispiel: 64 oder 128
-// Anderefals Laufen die Sortieverfahren bitonicsorter und oddevenmergesorter nicht zufrieden stellend 
-function creatArray(pArrayTyp, pMaxSteps) {
-    var index = d3.range(pMaxSteps);
+/*
+ * Erstellung eines Array für die Sortierung
+ * @param {int} pArrayTyp
+ * siehe eArrayTyp
+ * @param {int} pMaxSteps
+ * Sollte immer ein Vierfaches von 2 sein zum Beispiel: 64 oder 128
+ * Anderefals Laufen die Sortieverfahren bitonicsorter und oddevenmergesorter nicht zufrieden stellend
+ * @returns {lArray}
+ */
+function creatArray(pArrayTyp, pMaxSteps) {   
+    var lArray = d3.range(pMaxSteps);
     switch (pArrayTyp) {
         case eArrayTyp.Random:
-            return shuffleRandom(index.slice());
+            return shuffleRandom(lArray.slice());
             break;
         case eArrayTyp.Up:
-            return index.slice();
+            return lArray.slice();
             break;
         case eArrayTyp.Down:
-            return index.slice().sort(function(a, b){return b-a});
+            return lArray.slice().sort(function(a, b){return b-a});
             break;
         case eArrayTyp.RandomOneToHundred:          
-            return randomOneToHundred(index.slice());
+            return randomOneToHundred(lArray.slice());
             break;
     }
+    return lArray.slice();
 }
-
-function shuffleRandom(array) {
-    var i = array.length, j, t;
+/*
+ * Mischt das Array zufällig durch
+ * @param {type} pArray
+ * @returns {pArray}
+ */
+function shuffleRandom(pArray) {
+    var i = pArray.length, j, t;
     while (--i > 0) {
         j = ~~(Math.random() * (i + 1));
-        t = array[j];
-        array[j] = array[i];
-        array[i] = t;
+        t = pArray[j];
+        pArray[j] = pArray[i];
+        pArray[i] = t;
     }
-    return array;
+    return pArray;
 }
-function randomOneToHundred(array) {
-    var i = array.length, j;
+/*
+ * Setzt neue Eintrage in das Array 
+ * zwischen 1 und max 100
+ * @param {type} pArray
+ * @returns {pArray}
+ */
+function randomOneToHundred(pArray) {
+    var i = pArray.length, j;
     var lmax = Math.min(100,i);
     while (--i > 0) {
         j = ~~(Math.random() * (lmax + 1));      
-        array[i] = j;       
+        pArray[i] = j;       
     }
-    return array;
+    return pArray;
 }
+
 /*
  * Benutzungs Hild für die Anzeige der Neuen Sortier Anzeige
  * initSortNew
@@ -221,5 +261,17 @@ function startSortOld() {
         SortOld.start(1000);
     }
 }
+
+/*
+ * Heapsort Baumdarstellung
+ * 
+ * initHeapsortTree
+ * Generiert die Auszugebene Klasse
+ */
+var HeapsortTree = null;
+function initHeapsortTree(pSortAreaID){
+     HeapsortTree = new heapsortTree(pSortAreaID);
+}
+
 
 

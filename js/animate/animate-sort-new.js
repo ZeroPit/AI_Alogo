@@ -1,4 +1,13 @@
-
+/*
+ * 
+ * @param {int[]} pArray
+ * Das zu sortierende Array 
+ * 
+ * @param {int} pMaxSteps
+ * Anzahl der enthaltenden Werte
+ * 
+ * @returns {SortingAnimationNew.ret}
+ */
 function SortingAnimationNew(pArray, pMaxSteps) {
     var ret = {};
     var allActions = [];
@@ -17,6 +26,13 @@ function SortingAnimationNew(pArray, pMaxSteps) {
     var color = d3.scale.quantize().domain([height / 10, height])
             .range(["rgb(255,245,235)", "rgb(254,230,206)", "rgb(253,208,162)", "rgb(253,174,107)", "rgb(253,141,60)", "rgb(241,105,19)", "rgb(217,72,1)", "rgb(166,54,3)", "rgb(127,39,4)"]);
 
+    /*
+     * Startet die Ausgabe der Sortierten Stacks
+     * @param {type} delay
+     * das delay gibt an wie lange gewartet werden soll bis es gestartet werden soll nach dem Start ausgeführt wurden ist 
+     * 
+     * @returns {undefined}
+     */
     ret.start = function (delay) {
         setTimeout(
                 function () {
@@ -125,54 +141,86 @@ function SortingAnimationNew(pArray, pMaxSteps) {
                 }, delay);
     };
 
+    /*
+     * Resetet die Ausgabe bevor man die Function Start ausführt.
+     * @returns {undefined}
+     */
     ret.reset = function () {
         allActions = [];
         lines = [];
         infos = [];
     };
-
+    
+    /*
+     * Hinzufügen des zu Sortierenden Animation
+     * 
+     * @param {function} sortingfunction 
+     * Sortierfunktion die das gesamte Array Sortiert 
+     * und die Einzelen Schritte als Stack zurück gibt
+     * 
+     * @param {string} target
+     * ID des  <section> Tags "#target"
+     *  
+     * @returns {undefined}
+     */   
     ret.add = function (sortingfunction, target) {
+        // Erzeugung einer Kopie des genutzten Arrays 
         var data = srcData.slice();
-        var svg = d3.select(target).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g").attr("transform", "translate(" + margin.left + "," + (margin.top + height) + ")");
+        
+        // Erstellung der SVG Zeichnung in HTML Tag <section> mit der ID der target Variable
+        var svg = d3.select(target).append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + (margin.top + height) + ")");
 
-        var line = svg.selectAll("line").data(data).enter().append("line").attr("index", function (d, i) {
-            return "i" + i;
-        }).style("stroke", function (d) {
-            return color(a(d));
-        }).attr("x2", function (d) {
-            return 0;
-        }).attr("y2", function (d) {
-            return -a(d);
-        }).attr("transform", function (d, i) {
-            return "translate(" + x(i) + ")";
-        });
+        // Zeichnen aller Linien in der SVG Zeichnung 
+        var line = svg.selectAll("line").data(data).enter().append("line")
+                .attr("index", function (d, i) {
+                    return "i" + i;
+                })
+                .style("stroke", function (d) {
+                    return color(a(d));
+                })
+                .attr("x2", function (d) {
+                    return 0;
+                })
+                .attr("y2", function (d) {
+                    return -a(d);
+                })
+                .attr("transform", function (d, i) {
+                    return "translate(" + x(i) + ")";
+                });
+                
+        // Zeichnen aller Info Linien in der SVG Zeichnung 
+        var info = svg.selectAll("g").data(data).enter().append("svg:g").append("svg:line")
+                .attr("x1", function (d) {
+                    return 0;
+                })
+                .attr("y1", function (d) {
+                    return -height - 10;
+                })
+                .attr("x2", function (d) {
+                    return 0;
+                })
+                .attr("y2", function (d) {
+                    return -height - 5;
+                })
+                .style("stroke", function (d) {
+                    return "pink";
+                })
+                .style("opacity", function (d) {
+                    return 0;
+                })
+                .attr("transform", function (d, i) {
+                    return "translate(" + x(i) + ")";
+                });
 
-        var info = svg.selectAll("g").data(data).enter().append("svg:g").append("svg:line").attr("x1", function (d) {
-            return 0;
-        }).attr("y1", function (d) {
-            return -height - 10;
-        }).attr("x2", function (d) {
-            return 0;
-        }).attr("y2", function (d) {
-            return -height - 5;
-        }).style("stroke", function (d) {
-            return "pink";
-        }).style("opacity", function (d) {
-            return 0;
-        }).attr("transform", function (d, i) {
-            return "translate(" + x(i) + ")";
-        });
-
-        // sort the list, then reverse the stack of operations so we can animate chronologically from the start
+        //Sortierung des Arrays und Speicherung des Stacks in der Variable actions, sodass die Sortierung animiert werden kann
         var actions = sortingfunction(data).reverse();
-
-        // push our actions and reference to our lines to the animator	
-        allActions.push({
-            actions: actions
-        });
+        allActions.push({actions: actions});
         lines.push(line);
         infos.push(info);
     };
-
     return ret;
 }
