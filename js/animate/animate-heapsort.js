@@ -22,7 +22,7 @@ function heapsortTree(pTarget) {
     var tree = {cx: svgW / 2, cy: 30, w: 60, h: 70};
     tree.vis = {v: 0, v2: 0, l: '?', p: {x: tree.cx, y: tree.cy}, c: []};
     tree.size = 1;
-    
+
     /*
      * Initialisiert einen neuen Baum mit neuem Array
      * @returns {undefined}
@@ -111,7 +111,7 @@ function heapsortTree(pTarget) {
                     heapWithTimeout();
                 }, 2000);
             }
-        }      
+        }
         function heapWithTimeout() {
             if ((leafFocus >= 0)) {
                 setFocus(leafFocus);
@@ -139,10 +139,10 @@ function heapsortTree(pTarget) {
                 }
             }
         }
-        if (treeFin){
-              leafFocus = 0;
-              heapWithTimeout();
-        }           
+        if (treeFin) {
+            leafFocus = 0;
+            heapWithTimeout();
+        }
         else
             addWithTimeout();
     };
@@ -489,7 +489,7 @@ function heapsortTree(pTarget) {
 
         var circles = d3.select("#g_circles").selectAll('circle').data(getVertices());
         circles.attr('style', function (d) {
-            if (d.v === pLeafId){
+            if (d.v === pLeafId) {
                 drawFocusArea(pLeafId);
                 return 'stroke:steelblue;stroke-width:4px;';
             }
@@ -534,29 +534,35 @@ function heapsortTree(pTarget) {
             return a.v2 - b.v2;
         });
     };
-    getFocusArea = function (pLeafId){           
+    /*
+     * Gibt die Positionen der Verbindungslinien 
+     * für den Focusierten Bereich zurück 
+     * @param {type} pLeafId
+     * @returns {heapsortTree.getFocusArea.e2|Array}
+     */
+    getFocusArea = function (pLeafId) {
         var e = [];
         function getEd(t) {
             t.c.forEach(function (d) {
-                if(t.v === pLeafId)
+                if (t.v === pLeafId)
                     e.push({v1: t.v, l1: t.l, p1: t.p, v2: d.v, l2: d.l, p2: d.p});
             });
             t.c.forEach(getEd);
         }
         getEd(tree.vis);
         var e2 = [];
-        if(e.length === 0)
+        if (e.length === 0)
             return e2;
         var lLeft = e[0];
         var lRight = e[0];
-        if(e.length>1)
-            lRight = e[1];       
+        if (e.length > 1)
+            lRight = e[1];
         var lSpeas = 25;
-        e2.push({p1: {x:lLeft.p2.x - lSpeas ,y: lLeft.p2.y + lSpeas}, p2: {x:lRight.p2.x + lSpeas ,y: lRight.p2.y + lSpeas}});
-        e2.push({p1: {x:lRight.p2.x + lSpeas ,y: lRight.p2.y + lSpeas}, p2: {x:lRight.p2.x + lSpeas ,y: lRight.p1.y - lSpeas}});
-        e2.push({p1: {x:lRight.p2.x + lSpeas ,y: lRight.p1.y - lSpeas}, p2: {x:lLeft.p2.x - lSpeas ,y: lLeft.p1.y - lSpeas}});
-        e2.push({p1: {x:lLeft.p2.x - lSpeas ,y: lLeft.p1.y - lSpeas}, p2: {x:lLeft.p2.x - lSpeas ,y: lLeft.p2.y + lSpeas}});        
-        return e2;        
+        e2.push({p1: {x: lLeft.p2.x - lSpeas, y: lLeft.p2.y + lSpeas}, p2: {x: lRight.p2.x + lSpeas, y: lRight.p2.y + lSpeas}});
+        e2.push({p1: {x: lRight.p2.x + lSpeas, y: lRight.p2.y + lSpeas}, p2: {x: lRight.p2.x + lSpeas, y: lRight.p1.y - lSpeas}});
+        e2.push({p1: {x: lRight.p2.x + lSpeas, y: lRight.p1.y - lSpeas}, p2: {x: lLeft.p2.x - lSpeas, y: lLeft.p1.y - lSpeas}});
+        e2.push({p1: {x: lLeft.p2.x - lSpeas, y: lLeft.p1.y - lSpeas}, p2: {x: lLeft.p2.x - lSpeas, y: lLeft.p2.y + lSpeas}});
+        return e2;
     };
     /*
      * Gibt die Positionen der einzelenen Kreise zurück die angezeigt werden sollen
@@ -587,7 +593,6 @@ function heapsortTree(pTarget) {
         d3.select("#g_lines").remove();
         d3.select("#g_circles").remove();
         d3.select("#g_labels").remove();
-
         //Lines für die verbindungen
         d3.select("#treesvg").append('g').attr('id', 'g_lines').selectAll('line').data(getEdges()).enter().append('line')
                 .attr('x1', function (d) {
@@ -729,27 +734,31 @@ function heapsortTree(pTarget) {
                     return d.p.y + 5;
                 });
     };
-   
-    drawFocusArea = function (pLeafId){        
+    /*
+     * Zeichnet den Fokussierten Bereich der zurzeit relevant ist
+     * @param {type} pLeafId
+     * @returns {undefined}
+     */
+    drawFocusArea = function (pLeafId) {
         //Fokussierter Bereich mittels Linien
         d3.select("#g_linesArea").remove();
-        if(treeFin){
-        d3.select("#treesvg").append('g').attr('id', 'g_linesArea').selectAll('line').data(getFocusArea(pLeafId)).enter().append('line')
-                .attr('style','stroke:steelblue; stroke-width:3px')
-                .attr('stroke-dasharray', '3,3')
-                .attr('x1', function (d) {
-                    return d.p1.x;
-                })
-                .attr('y1', function (d) {
-                    return d.p1.y;
-                })
-                .attr('x2', function (d) {
-                    return d.p2.x;
-                })
-                .attr('y2', function (d) {
-                    return d.p2.y;
-                });
-            }
+        if (treeFin) {
+            d3.select("#treesvg").append('g').attr('id', 'g_linesArea').selectAll('line').data(getFocusArea(pLeafId)).enter().append('line')
+                    .attr('style', 'stroke:steelblue; stroke-width:3px')
+                    .attr('stroke-dasharray', '3,3')
+                    .attr('x1', function (d) {
+                        return d.p1.x;
+                    })
+                    .attr('y1', function (d) {
+                        return d.p1.y;
+                    })
+                    .attr('x2', function (d) {
+                        return d.p2.x;
+                    })
+                    .attr('y2', function (d) {
+                        return d.p2.y;
+                    });
+        }
     };
     /*
      * Zeichnet die Info Ausgabe in den Baum Bereich
@@ -869,4 +878,3 @@ function heapsortTree(pTarget) {
     initHeapSort();
     return this;
 }
-
