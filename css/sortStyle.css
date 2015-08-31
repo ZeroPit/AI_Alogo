@@ -61,11 +61,16 @@ line.pivot {
 }
 #treesvg g line{
     stroke:grey;
-    stroke-width:3px;
-   
+    stroke-width:3px;   
+}
+#g_labelInfo{
+    font-size: 22px; 
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
 }
 #g_labels text,#g_labels2 text{
     text-anchor:middle;
+    font-size: 18px; 
+    font-weight: bold;
 }
 #treesvg g text:hover, #treesvg g circle:hover{
     cursor:pointer;
