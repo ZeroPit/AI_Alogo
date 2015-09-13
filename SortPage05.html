@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>New UserSort</title>
+    <link rel="stylesheet" href="css/sortStyle.css">
+    <script src="js/sort.js"></script>
+</head>
+<body>
+    <div id="userSortAll">
+        <div><h2>Insertionsort</h2><section id="insertionsort"></section></div>
+        <div><h2>Selectionsort</h2><section id="selectionsort"></section></div>
+        <div><h2>BubbleSort</h2><section id="bubblesort"></section></div>
+        <div><h2>MergeSorter</h2><section id="mergesorter"></section></div>
+    </div>
+    <script>
+        window.onload = function ()
+        {
+            initUserSort("#userSortAll");
+        };
+    </script>
+</body>
+</html>

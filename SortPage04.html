@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -10,12 +10,13 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <script src="d3/d3.min.js"></script>
-        <script src="js/animate-usersort.js"></script>
-        <script src="js/insertionsort.js"></script>
-        <script src="js/selectionsort.js"></script>
-        <script src="js/bubblesort.js"></script>
-        <script src="js/mergesort.js"></script>
+        <script src="js/d3/d3.min.js"></script>
+        <script src="js/animate/animate-usersort.js"></script>
+        <script src="js/animate/animate-usersort-2.js"></script>
+        <script src="js/sort/insertionsort.js"></script>
+        <script src="js/sort/selectionsort.js"></script>
+        <script src="js/sort/bubblesort.js"></script>
+        <script src="js/sort/mergesort.js"></script>
 
         <style>
             circle{fill:white;stroke:steelblue;stroke-width:2px;}
@@ -25,15 +26,21 @@ and open the template in the editor.
         </style>
     </head>
     <body>
-        <div><h2>Insertionsort</h2><section id="insertionsort"></section></div>
+        <div>
+            <h2>Insertionsort</h2>
+            <section id="insertionsort"></section>
+            <div id="isInstruction1">1. Aktuelles Element(Grün) anklicken</div>
+            <div id="isInstruction2">2. Vergleichselement Links von Grün auswählen</div>
+            <div id="isInstruction3">3. Neues Vergleichselement auswählen</div>
+        </div>
         <div><h2>Selectionsort</h2><section id="selectionsort"></section></div>
         <div><h2>BubbleSort</h2><section id="bubblesort"></section></div>
         <div><h2>MergeSorter</h2><section id="mergesorter"></section></div>
         <script>
-            new UserSorting(new InsertionSort(), "insertionsort");
-            new UserSorting(new SelectionSort(), "selectionsort");
-            new UserSorting(new BubbleSort(), "bubblesort");
-            new UserSorting(new MergeSorter(), "mergesorter");
+            new UserSorting2(new InsertionSort(), "insertionsort");
+            //new UserSorting(new SelectionSort(), "selectionsort");
+            //new UserSorting(new BubbleSort(), "bubblesort");
+            //new UserSorting(new MergeSorter(), "mergesorter");
 
         </script>
     </body>
