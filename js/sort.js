@@ -44,7 +44,7 @@ function includeAll() {
     //Sortier Anzeigen
     include('js/animate/animate-sort-new.js');
     include('js/animate/animate-sort-old.js');
-    include('js/animate/animate-sort2.js');  
+    include('js/animate/animate-randomsort.js');  
     include('js/animate/animate-heapsort.js');    
    
 
@@ -60,6 +60,8 @@ function includeAll() {
     include('js/sort/oddeventranspositionsort.js');
     include('js/sort/oddevenmergesort.js');
     include('js/sort/bogosort.js');
+    
+    include('js/randomsort.js');
     
 }
 /*
@@ -273,5 +275,48 @@ function initHeapsortTree(pSortAreaID){
      HeapsortTree = new heapsortTree(pSortAreaID);
 }
 
+/*
+ * Random Sort Züfallige Bild Erzeugung
+ * 
+ * initRandomSort
+ * Generiert die Auszugebene Klasse
+ */
+var SortRandomDic = {};
+var SortRandom = null;
+function initSortRandom(pWidth,pStep) {
+    if (SortRandom !== null) {
+        for (var key in SortRandomDic) {
+            d3.select(key).select("svg").remove();
+        }
+    }
+    SortRandom = new SortingAnimationRandom(pWidth,pStep,creatRGB((pStep*pStep)-1));   
+    for (var key in SortRandomDic) {
+        d3.select(key).on("click", function () {
+            var pSortAreaID = "#" + this.id;
+            d3.select(pSortAreaID).select("svg").remove();
+            SortRandom.add(SortRandomDic[pSortAreaID].sort, pSortAreaID);
+        });
+        SortRandom.add(SortRandomDic[key].sort, key);       
+    }
+    SortRandom.reset();
+    SortRandom.start(1000);
+}
 
+function addToSortRandom(pSortAreaID, pSortID) {    
+    SortRandomDic[pSortAreaID] = new RandomSort(pSortID);
+}
+function startSortRandom() {
+    if (SortRandom!== null) {
+        for (var key in SortRandomDic) {
+            d3.select(key).select("svg").remove();
+            SortRandom.add(SortRandomDic[key].sort, key);
+        }
+        SortRandom.start(1000);
+    }
+}
+function stopSortRandom() {
+    if (SortRandom!== null) {       
+        SortRandom.reset();
+    }
+}
 

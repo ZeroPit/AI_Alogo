@@ -1,143 +1,109 @@
-function randomsort1(array, step) {
-    var actions = [];
+function RandomSort(pSortArtID) {
+    var _Actions, _Array, _Step,_Lenght;
+    var SortArtID = pSortArtID;
+    var _Mode, _ShowRGB;  
+    
+    var SortArt = [{mode:[0,1,2,3],showRGB:[0,1,2]},
+        {mode:[0,1],showRGB:[0,1,2]},
+        {mode:[0,1],showRGB:[0]},
+        {mode:[0,1],showRGB:[1]},
+        {mode:[0,1],showRGB:[2]},
+        
+        {mode:[2,3],showRGB:[0,1,2]},
+        {mode:[2,3],showRGB:[0]},
+        {mode:[2,3],showRGB:[1]},
+        {mode:[2,3],showRGB:[2]},
+        
+        {mode:[0,2],showRGB:[0,1]},
+        {mode:[0,2],showRGB:[1,2]},
+        {mode:[1,3],showRGB:[0,1]},
+        {mode:[1,3],showRGB:[1,2]}
+    ];
+      
+    
+    
+    this.sort = function (pArray,pStep) {
+        _Actions = [];
+        _Array = pArray.slice();
+        _Step = pStep;
+        _Lenght = (pStep *pStep ) -1;  
+        _Mode = SortArt[SortArtID].mode;       
+        _ShowRGB = SortArt[SortArtID].showRGB;
+        
+        randomsort();
+        return  _Actions;
+    };    
     function swap(i, j) {
-        var a = array[j].a;
-        array[j].a = array[i].a;
-        array[i].a = a;
-        var b = array[j].b;
-        array[j].b = array[i].b;
-        array[i].b = b;
-        actions.push({type: "swap", i: i, j: j});
+        var v = _Array[j].v;
+        _Array[j].v = _Array[i].v;
+        _Array[i].v = v;       
+        _Actions.push({type: "swap", i: i, j: j});
     }
-    function random() {
-        return   Math.floor(Math.random() * step);
+    function random(pMax) {
+        return   Math.floor(Math.random() * pMax);
     }
     function randomsort() {
-
         //Wiederhole
         var Steps = 0;
-        var StepsMax = 10000;
-        var row, col;        
+        var StepsMax = 1000;
+        var lRow, lCol, lMode, lShowRGB;
         do {
-            //wähle einen zufälligen Bildpunkt (row, col)
-            row = random();
-            col = random();
-            //wenn a(row, col) > red(row , col +1 )  
-            if (col > 0)
-            {
-                if (array[row * step + col-1].a > array[row * step + col].a)
-                    swap(row * step + col-1, row * step + col);
-            }
-            //wähle einen zufälligen Bildpunkt (row, col)
-            row = random();
-            col = random();
-            if (row > 0)
-            {
-                //wenn b(row, col) > red(row-1 , col )
-                if (array[row * step + col].b > array[(row - 1) * step + col].b)
-                    swap(row * step + col, (row - 1) * step + col);
-            }
+            //wï¿½hle einen zufï¿½lligen Bildpunkt (row, col)
+            lRow = random(_Step);
+            lCol = random(_Step);  
+            lMode = _Mode[random(2)]; 
+            lShowRGB = _ShowRGB[random(2)]; 
+                       
+            show(lRow, lCol, lMode, lShowRGB);
             Steps++;
         }
-        while (Steps<=StepsMax);
+        while (Steps <= StepsMax);
     }
-
-    randomsort();
-    return actions;
-}
-
-function randomsort2(array, step) {
-    var actions = [];
-    function swap(i, j) {
-        var a = array[j].a;
-        array[j].a = array[i].a;
-        array[i].a = a;
-        var b = array[j].b;
-        array[j].b = array[i].b;
-        array[i].b = b;
-        actions.push({type: "swap", i: i, j: j});
-    }
-    function random() {
-        return   Math.floor(Math.random() * step);
-    }
-    function randomsort() {
-
-        //Wiederhole
-        var Steps = 0;
-        var StepsMax = 10000;
-        var row, col;        
-        do {
-            //wähle einen zufälligen Bildpunkt (row, col)
-            row = random();
-            col = random();
-            //wenn a(row, col) > red(row , col +1 )  
-            if (col > 0)
-            {
-                if (array[row * step + col-1].a > array[row * step + col].a)
-                    swap(row * step + col-1, row * step + col);
-            }
-            //wähle einen zufälligen Bildpunkt (row, col)
-            row = random();
-            col = random();
-            if (row > 0)
-            {
-                //wenn b(row, col) > red(row-1 , col )
-                if (array[row * step + col].b > array[(row - 1) * step + col].b)
-                    swap(row * step + col, (row - 1) * step + col);
-            }
-            Steps++;
+    function show(pRow, pCol, pMode, pShowRGB) {
+        var lIndex1, lIndex2;
+        lIndex1 = pRow * _Step + pCol;      
+        switch (pMode) {           
+            case 1:
+                lIndex2 = (pRow - 1) * _Step + pCol;
+                break;
+            case 2:
+                lIndex2 = (pRow - 1) * _Step + pCol + 1;
+                break;
+            case 3:
+                lIndex2 = pRow * _Step + pCol + 1;
+                break;
+            case 4:
+                lIndex2 = (pRow+1) * _Step + pCol + 1;
+                break;
+            case 5:
+                lIndex2 = (pRow + 1) * _Step + pCol;
+                break;
+            case 6:
+                lIndex2 = (pRow + 1) * _Step + pCol - 1;
+                break;
+            case 7:
+                lIndex2 = pRow * _Step + pCol - 1;
+                break;
+             case 0:
+                lIndex2 = (pRow -1)  * _Step + pCol - 1;
+                break;
+        }                
+        if(!(0 <= lIndex2 && lIndex2 < _Lenght))
+            return ;
+        switch (pShowRGB) {
+            case 0:               
+                    if (_Array[lIndex1].v.r > _Array[lIndex2].v.r)
+                        swap(lIndex1, lIndex2);             
+                break;
+            case 1:             
+                    if (_Array[lIndex1].v.g > _Array[lIndex2].v.g)
+                        swap(lIndex1, lIndex2);           
+                break;
+            case 2:              
+                    if (_Array[lIndex1].v.b > _Array[lIndex2].v.b)
+                        swap(lIndex1, lIndex2);           
+                break;
         }
-        while (Steps<=StepsMax);
     }
-
-    randomsort();
-    return actions;
-}
-
-function randomsort3(array, step) {
-    var actions = [];
-    function swap(i, j) {
-        var a = array[j].a;
-        array[j].a = array[i].a;
-        array[i].a = a;
-        var b = array[j].b;
-        array[j].b = array[i].b;
-        array[i].b = b;
-        actions.push({type: "swap", i: i, j: j});
-    }
-    function random() {
-        return   Math.floor(Math.random() * step);
-    }
-    function randomsort() {
-
-        //Wiederhole
-        var Steps = 0;
-        var StepsMax = 10000;
-        var row, col;        
-        do {
-            //wähle einen zufälligen Bildpunkt (row, col)
-            row = random();
-            col = random();
-            //wenn a(row, col) > red(row , col +1 )  
-            if (col > 0)
-            {
-                if (array[row * step + col-1].a > array[row * step + col].a)
-                    swap(row * step + col-1, row * step + col);
-            }
-            //wähle einen zufälligen Bildpunkt (row, col)
-            row = random();
-            col = random();
-            if (row > 0)
-            {
-                //wenn b(row, col) > red(row-1 , col )
-                if (array[row * step + col].b > array[(row - 1) * step + col].b)
-                    swap(row * step + col, (row - 1) * step + col);
-            }
-            Steps++;
-        }
-        while (Steps<=StepsMax);
-    }
-
-    randomsort();
-    return actions;
+    return this;
 }
