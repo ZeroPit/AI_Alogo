@@ -45,7 +45,9 @@ function includeAll() {
     include('js/animate/animate-sort-new.js');
     include('js/animate/animate-sort-old.js');
     include('js/animate/animate-randomsort.js');  
-    include('js/animate/animate-heapsort.js');    
+    include('js/animate/animate-heapsort.js');
+    include('js/animate/animate-usersort.js');
+    include('js/animate/animate-usersort-2.js');
    
 
     //Sortierverfahren
@@ -275,6 +277,16 @@ function initHeapsortTree(pSortAreaID){
      HeapsortTree = new heapsortTree(pSortAreaID);
 }
 
+/*
+ * Usersort Grafische Darstellung
+ * 
+ * initHeapsortTree
+ * Generiert die Auszugebene Klasse
+ */
+var UserSortAll = null;
+function initUserSort(pSortAreaID) {
+    UserSortAll = new UserSorting2(pSortAreaID);
+}
 /*
  * Random Sort Züfallige Bild Erzeugung
  * 
