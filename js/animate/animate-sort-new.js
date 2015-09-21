@@ -36,7 +36,7 @@ function SortingAnimationNew(pArray, pMaxSteps) {
     ret.start = function (delay) {
         setTimeout(
                 function () {
-                    setInterval(function step() {
+                    setInterval(function () {
                         for (var i = 0; i < allActions.length; i++) {
                             var action = allActions[i].actions.pop();
                             var line = lines[i];
@@ -51,7 +51,6 @@ function SortingAnimationNew(pArray, pMaxSteps) {
                                         info.style("opacity", function (d, i) {
                                             return i == action.pivot ? 1 : 0;
                                         });
-                                        step();
                                         break;
                                     }
                                     case "swap":
@@ -74,60 +73,6 @@ function SortingAnimationNew(pArray, pMaxSteps) {
                                         });
                                         break;
                                     }
-                                    case "move":
-                                    {
-                                        console.log(line[0][action.i]);
-                                        var t = line[0][action.i];
-                                        line[0][action.i] = line[0][action.j];
-                                        line[0][action.j] = t;
-                                        line.attr("transform", function (d, i) {
-                                            return "translate(" + x(i) + ")";
-                                        });
-                                        line.style("stroke", function (d, i) {
-                                            return color(a(d));
-                                        });
-
-                                        info.style("opacity", function (d, i) {
-                                            return i == action.i || i == action.j ? 1 : 0;
-                                        });
-                                        info.style("stroke", function (d, i) {
-                                            return color(a(d));
-                                        });
-                                        break;
-                                    }
-                                    case "shuffle":
-                                    {
-                                        var t = line[0][action.i];
-                                        line[0][action.i] = line[0][action.j];
-                                        line[0][action.j] = t;
-                                        line.attr("transform", function (d, i) {
-                                            return "translate(" + x(i) + ")";
-                                        });
-                                        line.style("stroke", function (d, i) {
-                                            return color(a(d));
-                                        });
-                                        break;
-                                    }
-                                    case "miss":
-                                    {
-                                        info.style("opacity", function (d, i) {
-                                            return i == action.miss ? 1 : 0;
-                                        });
-                                        info.style("stroke", function (d) {
-                                            return "pink";
-                                        })
-                                        break;
-                                    }
-                                    case "traverse":
-                                    {
-                                        info.style("opacity", function (d, i) {
-                                            return i == action.traverse ? 1 : 0;
-                                        });
-                                        info.style("stroke", function (d) {
-                                            return "pink";
-                                        })
-                                        break;
-                                    }
                                     case "done":
                                     {
                                         info.style("opacity", function (d, i) {
@@ -137,7 +82,7 @@ function SortingAnimationNew(pArray, pMaxSteps) {
                                     }
                                 }
                         }
-                    }, 50);
+                    }, 1);
                 }, delay);
     };
 
@@ -150,7 +95,7 @@ function SortingAnimationNew(pArray, pMaxSteps) {
         lines = [];
         infos = [];
     };
-    
+
     /*
      * Hinzufügen des zu Sortierenden Animation
      * 
@@ -162,11 +107,11 @@ function SortingAnimationNew(pArray, pMaxSteps) {
      * ID des  <section> Tags "#target"
      *  
      * @returns {undefined}
-     */   
+     */
     ret.add = function (sortingfunction, target) {
         // Erzeugung einer Kopie des genutzten Arrays 
         var data = srcData.slice();
-        
+
         // Erstellung der SVG Zeichnung in HTML Tag <section> mit der ID der target Variable
         var svg = d3.select(target).append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -191,7 +136,7 @@ function SortingAnimationNew(pArray, pMaxSteps) {
                 .attr("transform", function (d, i) {
                     return "translate(" + x(i) + ")";
                 });
-                
+
         // Zeichnen aller Info Linien in der SVG Zeichnung 
         var info = svg.selectAll("g").data(data).enter().append("svg:g").append("svg:line")
                 .attr("x1", function (d) {

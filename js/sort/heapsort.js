@@ -23,8 +23,7 @@ function Heapsort() {
         }
     }
     function buildheap() {
-        for (var v = (n >>1 ) - 1; v >= 0; v--) {
-            _Actions.push({type: "traverse", "traverse": v});
+        for (var v = (n >>1 ) - 1; v >= 0; v--) {          
             downheap(v);
         }
     }

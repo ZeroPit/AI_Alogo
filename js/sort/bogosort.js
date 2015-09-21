@@ -20,8 +20,7 @@ function Bogosort() {
         return _Array;
     }
     function inOrder() {
-        for (var i = 1; i < _Array.length; i++) {
-            _Actions.push({type: "traverse", "traverse": i});
+        for (var i = 1; i < _Array.length; i++) {        
             if (_Array[i] < _Array[i - 1]) {
                 return false;
             }

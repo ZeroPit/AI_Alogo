@@ -3,21 +3,40 @@ function RandomSort(pSortArtID) {
     var SortArtID = pSortArtID;
     var _Mode, _ShowRGB;  
     
-    var SortArt = [{mode:[0,1,2,3],showRGB:[0,1,2]},
-        {mode:[0,1],showRGB:[0,1,2]},
-        {mode:[0,1],showRGB:[0]},
-        {mode:[0,1],showRGB:[1]},
-        {mode:[0,1],showRGB:[2]},
+    
+    /**
+     * mode
+     * 1 = 12 Uhr
+     * 2 = 1:30 Uhr
+     * 3 = 3 Uhr
+     * 4 = 4:30 Uhr
+     * 5 = 6 Uhr
+     * 6 = 7:30 Uhr
+     * 7 = 9 Uhr
+     * 0 = 10:30 Uhr
+     * 
+     * showRGB
+     * 0 = R
+     * 1 = G
+     * 2 = B
+     * @type Array
+     */
+    
+    var SortArt = [{mode:[0,1,2],showRGB:[0,1,2]},
+        {mode:[7,4,2],showRGB:[0,1,2]},
+        {mode:[0,2,5],showRGB:[0,1,2]},
+        {mode:[4,0,4],showRGB:[0,1,2]},
+        {mode:[1,4,2],showRGB:[0,1,2]},
         
-        {mode:[2,3],showRGB:[0,1,2]},
-        {mode:[2,3],showRGB:[0]},
-        {mode:[2,3],showRGB:[1]},
-        {mode:[2,3],showRGB:[2]},
+        {mode:[2,5,6],showRGB:[0,1,2]},
+        {mode:[6,1,4],showRGB:[0,1,2]},
+        {mode:[7,2,5],showRGB:[0,1,2]},
+        {mode:[1,3,0],showRGB:[0,1,2]},
         
-        {mode:[0,2],showRGB:[0,1]},
-        {mode:[0,2],showRGB:[1,2]},
-        {mode:[1,3],showRGB:[0,1]},
-        {mode:[1,3],showRGB:[1,2]}
+        {mode:[6,1,4],showRGB:[0,1,2]},
+        {mode:[4,6,2],showRGB:[0,1,2]},
+        {mode:[5,1,7],showRGB:[0,1,2]},
+        {mode:[2,4,6],showRGB:[0,1,2]},
     ];
       
     
@@ -46,13 +65,14 @@ function RandomSort(pSortArtID) {
         //Wiederhole
         var Steps = 0;
         var StepsMax = 1000;
-        var lRow, lCol, lMode, lShowRGB;
+        var lRow, lCol, lMode, lShowRGB, lOption;
         do {
             //w�hle einen zuf�lligen Bildpunkt (row, col)
             lRow = random(_Step);
             lCol = random(_Step);  
-            lMode = _Mode[random(2)]; 
-            lShowRGB = _ShowRGB[random(2)]; 
+            lOption = random(3);
+            lMode = _Mode[lOption]; 
+            lShowRGB = _ShowRGB[lOption]; 
                        
             show(lRow, lCol, lMode, lShowRGB);
             Steps++;

@@ -17,8 +17,7 @@ function ShellSort() {
         var i, j;
         var m = (_Array.length)>>1 ;
         while (m > 0) {
-            for (i = m; i < _Array.length; i++) {
-                _Actions.push({type: "traverse", "traverse": i});
+            for (i = m; i < _Array.length; i++) {              
                 j = i;
                 while (j >= m && _Array[j - m] > _Array[j]) {
                     swap(j, j - m);

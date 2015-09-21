@@ -87,6 +87,7 @@ function SortingAnimationRandom(pWidth, pSteps, pArray) {
     var srcData = pArray;
     var allActions = [];
     var rects = [];
+    var timer_off = true;
 
     /*
      * Kopier Funktion da Array.slice() nicht funktionier 
@@ -100,6 +101,14 @@ function SortingAnimationRandom(pWidth, pSteps, pArray) {
         });
         return lCopyArray;
     }
+    /*
+     * Erzeugt aus dem Letzten stand des zu sortierenden Array eine neuen stand
+     * sodass Random sort weiter sortiert wird bis unter 100 änderungen sind 
+     * dannn wird die Sortierung gestopt
+     * @param {type} pObjekt
+     * @param {type} delay
+     * @returns {undefined}
+     */
     function startNew(pObjekt, delay) {
         var actions = pObjekt.sortingfunction(pObjekt.data, steps).reverse();
         if (actions.length < 100)
@@ -107,6 +116,11 @@ function SortingAnimationRandom(pWidth, pSteps, pArray) {
         else
             pObjekt.actions = actions;
     }
+    /*
+     * Leert das gesamte Target sodass es nicht zu fehlern kommt
+     * @param {type} pTarget
+     * @returns {Boolean}
+     */
     function clear(pTarget) {
         for (var i = 0; i < allActions.length; i++) {
             var actionTarget = allActions[i];
@@ -118,42 +132,43 @@ function SortingAnimationRandom(pWidth, pSteps, pArray) {
         return false;
     }
 
-
+    /*
+     * Startet die Ausgabe von Random Sort solange bis es gestopt wird 
+     * @param {type} delay
+     * @returns {undefined}
+     */
     ret.start = function (delay) {
-        setTimeout(
-                function () {
-                    setInterval(function step() {
-                        for (l = 0; l < 5; l++) {
-                            for (var i = 0; i < allActions.length; i++) {
-                                var action = allActions[i].actions.pop();
-                                var rect = rects[i];
-                                if (action)
-                                {
-                                    switch (action.type) {
-                                        case "swap":
-                                        {
-                                            var t = rect[0][action.i];
-                                            rect[0][action.i] = rect[0][action.j];
-                                            rect[0][action.j] = t;
-                                            rect.attr("transform", function (d, i) {
-                                                return "translate(" + (i % steps) * z + "," + Math.floor(i / steps) * z + ")";
-                                            });
-                                            break;
-                                        }
-                                    }
-                                }
-
+        timer_off = false;
+        d3.timer(function () {
+            for (l = 0; l < 5; l++) {
+                for (var i = 0; i < allActions.length; i++) {
+                    var action = allActions[i].actions.pop();
+                    var rect = rects[i];
+                    if (action)
+                    {
+                        switch (action.type) {
+                            case "swap":
+                            {
+                                var t = rect[0][action.i];
+                                rect[0][action.i] = rect[0][action.j];
+                                rect[0][action.j] = t;
+                                rect.attr("transform", function (d, i) {
+                                    return "translate(" + (i % steps) * z + "," + Math.floor(i / steps) * z + ")";
+                                });
+                                break;
                             }
                         }
-                        for (var i = 0; i < allActions.length; i++) {
-                            if (allActions[i].actions.length === 0 && allActions[i].stop === false) {
-                                startNew(allActions[i]);
-                                i--;
-                            }
-                        }
-
-                    }, 1);
-                }, delay);
+                    }
+                }
+            }
+            for (var i = 0; i < allActions.length; i++) {
+                if (allActions[i].actions.length === 0 && allActions[i].stop === false) {
+                    startNew(allActions[i]);
+                    i--;
+                }
+            }
+            return timer_off;
+        });
     };
     /*
      * Resetet die Ausgabe bevor man die Function Start ausführt.
@@ -162,9 +177,18 @@ function SortingAnimationRandom(pWidth, pSteps, pArray) {
     ret.reset = function () {
         allActions = [];
         rects = [];
+        timer_off = true;
     };
     /*
-     * Hizu
+     * Startet den Sortierung wenn sie ganz aus ist 
+     * @returns {undefined}
+     */
+    ret.restart = function () {
+        if (timer_off)
+            ret.start(0);
+    };
+    /*
+     * Hizufügen einer Instanz für RandomSort
      */
     ret.add = function (sortingfunction, target) {
         clear(target);
@@ -198,4 +222,3 @@ function SortingAnimationRandom(pWidth, pSteps, pArray) {
     };
     return ret;
 }
-

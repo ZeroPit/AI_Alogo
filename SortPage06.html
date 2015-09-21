@@ -3,32 +3,43 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8"> 
-    <title>Random Sort mit Zufällig entstehenden Bildern</title>
+    <title>Random Sort mit Zufï¿½llig entstehenden Bildern</title>
     <link rel="stylesheet" href="css/sortStyle.css">
     <script src="js/sort.js"></script>    
 </head>
 <body>  
     <h1>Einstellungen</h1>
-    <div id="settings">        
+    <div id="settings">     
+        <div class="dropdown orange" style="float: left; margin-top: 0px; margin-right: 5px;" >
+            <select id="maxSteps" class="dropdown-select orange">                   
+                <option value="30">30</option>
+                <option value="25">25</option>
+                <option selected="" value="20">20</option>
+                <option value="15">15</option>
+                <option value="10">10</option>
+                <option value="5">5</option>
+
+            </select>
+        </div>
         <button type="button" class="button orange"  id="startSort" title="Startet ">Start</button> 
-         <button type="button" class="button orange"  id="stopSort" title="Startet ">Stop</button> 
+        <button type="button" class="button orange"  id="stopSort" title="Startet ">Stop</button> 
     </div>
     <h1>Random Sort</h1>
     <div id="sortDesplay">  
         <div class="SortArea"><section id="randomsort1"></section> </div>
-         <div class="SortArea"><section id="randomsort2"></section> </div>
-         <div class="SortArea"><section id="randomsort3"></section> </div>
-         <div class="SortArea"><section id="randomsort4"></section> </div>
-         
-         <div class="SortArea"><section id="randomsort5"></section> </div>
-         <div class="SortArea"><section id="randomsort6"></section> </div>
-         <div class="SortArea"><section id="randomsort7"></section> </div>
-         <div class="SortArea"><section id="randomsort8"></section> </div>
-         
-         <div class="SortArea"><section id="randomsort9"></section> </div>
-         <div class="SortArea"><section id="randomsort10"></section> </div>
-         <div class="SortArea"><section id="randomsort11"></section> </div>
-         <div class="SortArea"><section id="randomsort12"></section> </div>
+        <div class="SortArea"><section id="randomsort2"></section> </div>
+        <div class="SortArea"><section id="randomsort3"></section> </div>
+        <div class="SortArea"><section id="randomsort4"></section> </div>
+
+        <div class="SortArea"><section id="randomsort5"></section> </div>
+        <div class="SortArea"><section id="randomsort6"></section> </div>
+        <div class="SortArea"><section id="randomsort7"></section> </div>
+        <div class="SortArea"><section id="randomsort8"></section> </div>
+
+        <div class="SortArea"><section id="randomsort9"></section> </div>
+        <div class="SortArea"><section id="randomsort10"></section> </div>
+        <div class="SortArea"><section id="randomsort11"></section> </div>
+        <div class="SortArea"><section id="randomsort12"></section> </div>
 
     </div>
     <script>
@@ -47,11 +58,16 @@
             addToSortRandom("#randomsort11", 11);
             addToSortRandom("#randomsort12", 12);
             var lWidth = 200;
-            var lStep = 30;
+            var lStep = 20;
             initSortRandom(lWidth, lStep);
-            document.getElementById("startSort").onclick = startSortRandom;
-            document.getElementById("stopSort").onclick = startSortRandom;
-            
+            document.getElementById("startSort").onclick = function () {
+                lStep = document.getElementById("maxSteps").value * 1;
+                stopSortRandom();
+                initSortRandom(lWidth, lStep);
+                startSortRandom();
+            };
+            document.getElementById("stopSort").onclick = stopSortRandom;
+
         };
     </script>
 </body>

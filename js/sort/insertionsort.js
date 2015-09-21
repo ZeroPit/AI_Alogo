@@ -19,8 +19,7 @@ function InsertionSort() {
     }
     function insertionsort() {
         var i, j;
-        for (i = 1; i < _Array.length; i++) {
-            _Actions.push({type: "traverse", "traverse": i});
+        for (i = 1; i < _Array.length; i++) {          
             j = i;
             while (j > 0 && _Array[j - 1] > _Array[j]) {
                 swap(j, j - 1);

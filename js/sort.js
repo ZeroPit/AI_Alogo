@@ -307,6 +307,7 @@ function initSortRandom(pWidth,pStep) {
             var pSortAreaID = "#" + this.id;
             d3.select(pSortAreaID).select("svg").remove();
             SortRandom.add(SortRandomDic[pSortAreaID].sort, pSortAreaID);
+            SortRandom.restart();
         });
         SortRandom.add(SortRandomDic[key].sort, key);       
     }
@@ -321,7 +322,7 @@ function startSortRandom() {
     if (SortRandom!== null) {
         for (var key in SortRandomDic) {
             d3.select(key).select("svg").remove();
-            SortRandom.add(SortRandomDic[key].sort, key);
+            SortRandom.add(SortRandomDic[key].sort, key);          
         }
         SortRandom.start(1000);
     }

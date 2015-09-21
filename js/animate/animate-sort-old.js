@@ -32,7 +32,7 @@ function SortingAnimationOld(pArray, pMaxSteps) {
     ret.start = function (delay) {
         setTimeout(
                 function () {
-                    setInterval(function step() {
+                    setInterval(function () {
                         for (var i = 0; i < allActions.length; i++) {
                             var action = allActions[i].actions.pop();
                             var rect = rects[i];
