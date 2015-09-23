@@ -3,7 +3,7 @@ function UserSorting(sortingfunction, target) {
     this.SortingFunction = sortingfunction;
     this.Target = target;
 
-    var svgW = 598, svgH = 100, vRad = 12;
+    var svgW = 598, svgH = 100, vRad = 18;
 
 
     var maxArray = 8;
@@ -210,14 +210,13 @@ function UserSorting(sortingfunction, target) {
 
     initialize = function (pThis) {
         d3.select("#" + pThis.Target).append("div").attr('id', 'usersort' + pThis.Target);
-        d3.select("#usersort" + pThis.Target).append("div").attr('id', 'info').append("p");
-        d3.select("#usersort" + pThis.Target).append("svg").attr("width", svgW).attr("height", svgH).attr('id', 'sortsvg');
-        d3.select("#usersort" + pThis.Target).append("div").attr('id', 'buttondiv' + pThis.Target);
-        d3.select("#buttondiv" + pThis.Target).append("button").attr('id', 'button1' + pThis.Target).attr('type', 'button').attr('style', 'width:190px').text('Neuer Veruch').on('click', function (d) {
+
+        d3.select("#usersort" + pThis.Target).append("svg").attr("width", svgW).attr("height", svgH).attr('id', 'sortsvg').attr('class', 'mybuttondiv');
+        d3.select("#usersort" + pThis.Target).append("div").attr('id', 'info').append("p").attr('class', 'mybuttondiv');
+
+        d3.select("#usersort" + pThis.Target).append("div").attr('id', 'buttondiv' + pThis.Target).attr('class', 'mybuttondiv');
+        d3.select("#buttondiv" + pThis.Target).append("button").attr('type', 'button').attr('class', 'button orange').text('Neuer Versuch').on('click', function (d) {
             return pThis.startNew();
-        });
-        d3.select("#buttondiv" + pThis.Target).append("button").attr('id', 'button2' + pThis.Target).attr('type', 'button').attr('style', 'width:190px; margin-left:15px').text('Hilfe').on('click', function (d) {
-            return nextSteep();
         });
         pThis.startNew();
     };

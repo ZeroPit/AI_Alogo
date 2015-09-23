@@ -6,42 +6,30 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <script src="js/d3/d3.min.js"></script>
-        <script src="js/animate/animate-usersort.js"></script>
-        <script src="js/animate/animate-usersort-2.js"></script>
-        <script src="js/sort/insertionsort.js"></script>
-        <script src="js/sort/selectionsort.js"></script>
-        <script src="js/sort/bubblesort.js"></script>
-        <script src="js/sort/mergesort.js"></script>
-
-        <style>
-            circle{fill:white;stroke:steelblue;stroke-width:2px;}
-            line{stroke:grey;stroke-width:3px;}
-            g text:hover,g circle:hover{cursor:pointer;}
-            #g_labels text{text-anchor:middle;}
-        </style>
+        <title>User Sort</title>      
+        <link rel="stylesheet" href="css/sortStyle.css">
+        <script src="js/sort.js"></script>  
     </head>
     <body>
-        <div>
-            <h2>Insertionsort</h2>
-            <section id="insertionsort"></section>
-            <div id="isInstruction1">1. Aktuelles Element(Grün) anklicken</div>
-            <div id="isInstruction2">2. Vergleichselement Links von Grün auswählen</div>
-            <div id="isInstruction3">3. Neues Vergleichselement auswählen</div>
-        </div>
-        <div><h2>Selectionsort</h2><section id="selectionsort"></section></div>
         <div><h2>BubbleSort</h2><section id="bubblesort"></section></div>
-        <div><h2>MergeSorter</h2><section id="mergesorter"></section></div>
+        <div><h2>Selectionsort</h2><section id="selectionsort"></section></div>
+        <div><h2>Insertionsort</h2><section id="insertionsort"></section></div>       
+        <div><h2>Shellsort</h2><section id="shellsort"></section></div>
+        <div><h2>Quicksort</h2><section id="quicksort"></section></div>
+        <div><h2>MergeSorter</h2><section id="mergesort"></section></div>
         <script>
-            new UserSorting2(new InsertionSort(), "insertionsort");
-            //new UserSorting(new SelectionSort(), "selectionsort");
-            //new UserSorting(new BubbleSort(), "bubblesort");
-            //new UserSorting(new MergeSorter(), "mergesorter");
+            window.onload = function () {
 
+                addToUserSort("bubblesort", eSort.bubblesort);
+                addToUserSort("selectionsort", eSort.selectionsort);
+                addToUserSort("insertionsort", eSort.insertionsort);
+                addToUserSort("shellsort", eSort.shellsort);
+                addToUserSort("quicksort", eSort.quicksort);
+                addToUserSort("mergesort", eSort.mergesort);               
+               
+                initUserSort();
+            };
         </script>
     </body>
 </html>

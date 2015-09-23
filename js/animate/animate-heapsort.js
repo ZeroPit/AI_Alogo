@@ -39,8 +39,8 @@ function heapsortTree(pTarget) {
         drawInfoText("Zunächst muss der Baum erstellt werden");
     };
     /*
-     * Wenn der Baum noch nicht fertiggestellt  wurde
-     * Wird er mit eine leichten verzögerung zu ende erstellt 
+     * Wenn der Baum noch nicht fertiggestellt wurde
+     * Wird er mit einer leichten Verzögerung zu Ende erstellt 
      * @returns {undefined}
      */
     finAutoTree = function () {
@@ -840,7 +840,7 @@ function heapsortTree(pTarget) {
                 });
     };
     /*
-     * Initialisiert Die entsprechenden Bereiche der Ausgaben und eigabe möglichkeiten der Buttons
+     * Initialisiert die entsprechenden Bereiche der Ausgaben und Eingabe möglichkeiten der Buttons
      */
     initHeapSort = function () {
         //Start Array Anzeige 
@@ -856,7 +856,7 @@ function heapsortTree(pTarget) {
         //Button
         d3.select(target).append("div").attr('id', 'buttondiv');
 
-        d3.select("#buttondiv").append("button").attr('type', 'button').attr('class', 'button orange').attr('style', 'width:250px').text('Neuer Veruch')
+        d3.select("#buttondiv").append("button").attr('type', 'button').attr('class', 'button orange').attr('style', 'width:250px').text('Neuer Versuch')
                 .on('click', function (d) {
                     return initTree();
                 });
