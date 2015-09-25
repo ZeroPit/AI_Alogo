@@ -1,3 +1,11 @@
+/* 
+    Dateiname  : animate-heapsort.js
+    Erstellt   : 2015
+    Authoren   : Peter Steensen (550020) and Denny Lüttschwager (343709)
+    Projekt    : JavaScript anstelle Java-Applet
+    Professor  : Prof. Lang
+*/
+
 /*
  * Erzuegt ein Bereich der alle Ausgabe 
  * und eingabefelder besitzt die benötigt werden

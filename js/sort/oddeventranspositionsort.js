@@ -1,3 +1,11 @@
+/* 
+    Dateiname  : oddeventranspositionsort.js
+    Erstellt   : 2015
+    Authoren   : Peter Steensen (550020) and Denny Lüttschwager (343709)
+    Projekt    : JavaScript anstelle Java-Applet
+    Professor  : Prof. Lang
+*/
+
 function OddEvenTranspositionSort() {
     var _Actions, _Array;
     this.sortAll = function (array) {

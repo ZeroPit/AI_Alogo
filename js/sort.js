@@ -1,8 +1,10 @@
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+Dateiname  : sort.js
+Erstellt   : 2015
+Authoren   : Peter Steensen (550020) and Denny Lüttschwager (343709)
+Projekt    : JavaScript anstelle Java-Applet
+Professor  : Prof. Lang
+*/
 
 /*
  * ArrayTyp Enum

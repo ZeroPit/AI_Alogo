@@ -1,3 +1,11 @@
+/* 
+    Dateiname  : insertionsort.js
+    Erstellt   : 2015
+    Authoren   : Peter Steensen (550020) and Denny Lüttschwager (343709)
+    Projekt    : JavaScript anstelle Java-Applet
+    Professor  : Prof. Lang
+*/
+
 function InsertionSort() {
     /**
      * Visual Sort
@@ -38,13 +46,13 @@ function InsertionSort() {
     this.updateMode = function (pMode) {
         switch (pMode) {
             case 0:
-                return "Grün anklicken";
+                return "1. Vergleichselement(Grün) anklicken";
             case 1:
                 return "Grün Fokussieren";
             case 2:
-                return "Ist Rot > Grün -1";
+                return "Ist das Linke Element größer als Grün? Wenn ja anklicken ansonsten auf den Leeren Kreis klicken.";
             case 3:
-                return "Fertig";
+                return "Das Array ist sortiert.";
         }
     };
     this.onClick = function (pSortInfo,pOriginal) {
