@@ -1,7 +1,7 @@
 /* 
     Dateiname  : shellsort.js
     Erstellt   : 2015
-    Authoren   : Peter Steensen (550020) and Denny Lüttschwager (343709)
+    Authoren   : Peter Steensen (550020) and Denny Lï¿½ttschwager (343709)
     Projekt    : JavaScript anstelle Java-Applet
     Professor  : Prof. Lang
 */
@@ -45,11 +45,11 @@ function ShellSort() {
     this.updateMode = function (pMode) {
         switch (pMode) {
             case 0:
-                return "Grün anklicken";
+                return "GrÃ¼n anklicken";
             case 1:
-                return "Grün Fokussieren";
+                return "GrÃ¼n Fokussieren";
             case 2:
-                return "Ist Rot > Grün -1";
+                return "Ist Rot > GrÃ¼n -1";
             case 3:
                 return "Fertig";
         }
