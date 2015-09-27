@@ -57,7 +57,7 @@ function BubbleSort() {
          */
         switch (pMode) {
             case 0:
-                return "Wenn Grün > Rot dann klicke Grün sonst Rot";          
+                return "Wenn das 1. Vergleichselement (Grün) größer ist als das 2. Vergleichselement (Rot) dann klicke Grün ansonsten Rot";          
             case 3:
                 return "Fertig";
         }

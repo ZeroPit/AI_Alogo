@@ -32,7 +32,13 @@ function UserSorting(sortingfunction, target) {
     this.startNew = function () {
         this.createNewArray();
         _SteepFin = false;
-        this.SortInfo.Left = this.SortingFunction.LeftStart;
+        if (this.SortingFunction.LeftStart == -2) {
+            this.SortInfo.Left = Math.floor((this.SortInfo.Array.length / 2) - 1);
+            this.SortInfo.Right = this.SortInfo.Array.length;
+        }
+        else {
+            this.SortInfo.Left = this.SortingFunction.LeftStart;
+        }
         this.SortInfo.Right = this.SortingFunction.RightStart;
         this.SortInfo.click = -1;
         this.SortInfo.UpLeft = -1;
@@ -50,7 +56,25 @@ function UserSorting(sortingfunction, target) {
         for (var i = 0; i < lMax; i++) {
             this.SortInfo.Array.push(Math.floor((Math.random() * lMax) + 1));
             this.SortInfo.ArrayUp.push(-1);
+            //TODO: TestArray herausnehmen
+            this.SortInfo.TestArray = this.SortInfo.Array[i];
         }
+        /*this.SortInfo.Array.push(3);
+        this.SortInfo.Array.push(7);
+        this.SortInfo.Array.push(4);
+        this.SortInfo.Array.push(8);
+        this.SortInfo.Array.push(5);
+        this.SortInfo.Array.push(2);
+        this.SortInfo.Array.push(2);
+        this.SortInfo.Array.push(4);
+        this.SortInfo.ArrayUp.push(-1);
+        this.SortInfo.ArrayUp.push(-1);
+        this.SortInfo.ArrayUp.push(-1);
+        this.SortInfo.ArrayUp.push(-1);
+        this.SortInfo.ArrayUp.push(-1);
+        this.SortInfo.ArrayUp.push(-1);
+        this.SortInfo.ArrayUp.push(-1);
+        this.SortInfo.ArrayUp.push(-1);*/
 
     };
 
@@ -93,7 +117,10 @@ function UserSorting(sortingfunction, target) {
     updateAll = function (pThis)
     {
         var SortDiv = d3.select("#usersort" + pThis.Target);
+
+        //Schreibt den nächsten Schritt für den User
         SortDiv.select("#info").select('p').text(pThis.SortingFunction.updateMode(pThis.SortInfo.Mode));
+
         //Löscht die alten Elemente      
         SortDiv.select("#sortsvg").select("#g_circles").remove();
         SortDiv.select("#sortsvg").select("#g_labels").remove();

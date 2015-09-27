@@ -42,68 +42,99 @@ function ShellSort() {
     this.LeftStart = 0;
     this.RightStart = 1;
 
+    this.cols = [4, 2, 1];
+    this.LeftStart = 0;
+    this.RightStart = -1;
+    this.i = 0;
+    this.j = 0;
+    this.k = 0;
+    this.h = 0;
+    this.t = 0;
+
     this.updateMode = function (pMode) {
         switch (pMode) {
             case 0:
-                return "Grün anklicken";
+                return "Spalten Anzahl auf " + String(this.cols[0]) + " setzen.";
             case 1:
-                return "Grün Fokussieren";
+                return "In der " + String(this.i % this.cols[0] + 1) + ". Spalte mit dem nächsten Element(Rot) vergleichen.";
             case 2:
-                return "Ist Rot > Grün -1";
+                return "Wenn das 1. Element (Grün) größer ist als das 2. Element (Rot) dann klicke Grün ansonsten Rot.";
             case 3:
-                return "Fertig";
+                return "Das Array ist sortiert.";
         }
     };
     this.onClick = function (pSortInfo, pOriginal) {
         switch (pSortInfo.Mode) {
             case 0:
                 if (pSortInfo.click === pSortInfo.Left) {
-                    pSortInfo.Left = pSortInfo.Right;
+                    this.h = this.cols[0];
+                    this.i = this.cols[0];
+                    pSortInfo.Left = this.i - this.h;
+                    pSortInfo.Right = this.i;
                     pSortInfo.Mode++;
                 }
                 break;
+
             case 1:
-                if (pSortInfo.click === pSortInfo.Left && pSortInfo.click === pSortInfo.Right) {
-                    pSortInfo.ArrayUp[pSortInfo.click] = pSortInfo.Array[pSortInfo.click];
-                    pSortInfo.Array[pSortInfo.click] = -1;
-                    pSortInfo.UpLeft = pSortInfo.Left;
-                    pSortInfo.Mode++;
-                    pSortInfo.Update = true;
-                }
-                break;
-            case 2:
-                if (pSortInfo.Left - 1 === pSortInfo.click) {
-                    if (pSortInfo.Array[pSortInfo.click] > pSortInfo.ArrayUp[pSortInfo.Left]) {
-                        pSortInfo.ArrayUp[pSortInfo.click] = pSortInfo.ArrayUp[pSortInfo.Left];
-                        pSortInfo.ArrayUp[pSortInfo.Left] = -1;
-                        pSortInfo.Array[pSortInfo.Left] = pSortInfo.Array[pSortInfo.click];
-                        pSortInfo.Array[pSortInfo.click] = -1;
-                        pSortInfo.Left--;
-                        pSortInfo.UpLeft = pSortInfo.Left;
-                        pSortInfo.Update = false;
+                if (pSortInfo.click === pSortInfo.Left || pSortInfo.click === pSortInfo.Right) {
+                    if (this.i < pSortInfo.Array.length) {
+                        this.j = this.i;
+                        this.t = pSortInfo.Array[this.j];
+                        pSortInfo.Left = this.i - this.h;
+                        pSortInfo.Right = this.j;
+
+                        if (this.j >= this.h && pSortInfo.Array[this.j - this.h] > this.t)
+                        {
+                            pSortInfo.Mode++;
+                        }
+                        else {
+                            this.i += 1;
+                            pSortInfo.Left++;
+                            pSortInfo.Right++;
+                        }
                     }
-                }
-                else if (pSortInfo.Left === pSortInfo.click) {
-                    var Set = false;
-                    if (pSortInfo.click === 0)
-                        Set = true;
-                    else if (pSortInfo.Array[pSortInfo.click - 1] <= pSortInfo.ArrayUp[pSortInfo.Left])
-                        Set = true;
-                    if (Set) {
-                        pSortInfo.Array[pSortInfo.click] = pSortInfo.ArrayUp[pSortInfo.Left];
-                        pSortInfo.ArrayUp[pSortInfo.Left] = -1;
-                        pSortInfo.Right++;
-                        pSortInfo.UpLeft = -1;
-                        if (pSortInfo.Right === pSortInfo.Array.length) {
+                    else {
+                        this.cols.shift();
+                        if (this.cols.length == 0) {
                             pSortInfo.Left = -1;
                             pSortInfo.Right = -1;
                             pSortInfo.Mode = 3;
                         }
-                        else
+                        else{
                             pSortInfo.Mode = 0;
+                        }
                     }
-                    pSortInfo.Update = true;
                 }
+                break;
+
+            case 2:
+                if (pSortInfo.click === pSortInfo.Left || pSortInfo.click === pSortInfo.Right) {
+                    if (this.j >= this.h && pSortInfo.Array[this.j - this.h] > this.t) {
+                        pSortInfo.Array[this.j] = pSortInfo.Array[this.j - this.h];
+                        this.j = this.j - this.h;
+                        pSortInfo.Array[this.j] = this.t;
+
+                        if (this.j >= this.h && pSortInfo.Array[this.j - this.h] > this.t) {
+                            pSortInfo.Left -= this.h;
+                            pSortInfo.Right -= this.h;
+                        }
+                        else {
+                            pSortInfo.Mode = 1;
+                            pSortInfo.Left++;
+                            pSortInfo.Right++;
+                            this.i += 1;
+                        }
+                    }
+                    else {
+                        pSortInfo.Mode = 1;
+                        pSortInfo.Left++;
+                        pSortInfo.Right++;
+                        this.i += 1;
+                    }
+                }
+                break;
+
+            case 3:
                 break;
         }
         return pSortInfo;
