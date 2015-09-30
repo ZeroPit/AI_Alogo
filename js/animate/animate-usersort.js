@@ -52,30 +52,11 @@ function UserSorting(sortingfunction, target) {
     {
         this.SortInfo.Array = [];
         this.SortInfo.ArrayUp = [];
-        var lMax = Math.floor((Math.random() * (maxArray - 4)) + 5);
+        var lMax = 8;
         for (var i = 0; i < lMax; i++) {
             this.SortInfo.Array.push(Math.floor((Math.random() * lMax) + 1));
             this.SortInfo.ArrayUp.push(-1);
-            //TODO: TestArray herausnehmen
-            this.SortInfo.TestArray = this.SortInfo.Array[i];
         }
-        /*this.SortInfo.Array.push(3);
-        this.SortInfo.Array.push(7);
-        this.SortInfo.Array.push(4);
-        this.SortInfo.Array.push(8);
-        this.SortInfo.Array.push(5);
-        this.SortInfo.Array.push(2);
-        this.SortInfo.Array.push(2);
-        this.SortInfo.Array.push(4);
-        this.SortInfo.ArrayUp.push(-1);
-        this.SortInfo.ArrayUp.push(-1);
-        this.SortInfo.ArrayUp.push(-1);
-        this.SortInfo.ArrayUp.push(-1);
-        this.SortInfo.ArrayUp.push(-1);
-        this.SortInfo.ArrayUp.push(-1);
-        this.SortInfo.ArrayUp.push(-1);
-        this.SortInfo.ArrayUp.push(-1);*/
-
     };
 
     this.clickArray = function (Id) {

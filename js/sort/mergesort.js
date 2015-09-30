@@ -77,21 +77,19 @@ function MergeSorter() {
     this.LeftStart = 0;
     this.RightStart = -1;
 
+    this.GlobalPosition = 0;
+    this.HelpArraySize = 1;
+    this.ArrayLeftPosition = 0;
+    this.ArrayRightPosition = 0;
+
     this.updateMode = function (pMode) {
-        /*
-         Methode:	
-         für i=0 bis n-2 wiederhole
-         für j=i+1 bis n-1 wiederhole
-         wenn a[j] < a[i]
-         vertausche a[i] mit a[j]
-         */
         switch (pMode) {
             case 0:
                 return "Grün anklicken um Array ins Hilfsarray zu kopieren";
             case 1:
-                return "Grün anklicken";
+                return "Merge Größe " + this.HelpArraySize + ", Array zusammen kopieren, dafür den größeren der Markierten Werte anklicken";
             case 2:
-                return "Grün anklicken";
+                return "Hilfs Array löschen";
             case 3:
                 return "Fertig";
         }
@@ -107,7 +105,7 @@ function MergeSorter() {
                     pSortInfo.Right = -1;
                     pSortInfo.Left = 0;
                     pSortInfo.UpLeft = 0;
-                    pSortInfo.UpRight = ~~(pSortInfo.Array.length / 2);
+                    pSortInfo.UpRight = pSortInfo.Left + this.HelpArraySize;
                     pSortInfo.Mode = 1;
                 }
                 break;
@@ -118,8 +116,27 @@ function MergeSorter() {
                         {
                             pSortInfo.Array[pSortInfo.Left] = pSortInfo.ArrayUp[pSortInfo.UpLeft];
                             pSortInfo.ArrayUp[pSortInfo.UpLeft] = -1;
-                            pSortInfo.UpLeft++;
-                            pSortInfo.Left++;
+                            this.ArrayLeftPosition++;
+                            if (this.ArrayLeftPosition < this.HelpArraySize) {
+                                pSortInfo.UpLeft++;
+                                pSortInfo.Left++;
+                            }
+                            else {
+                                pSortInfo.UpLeft = -1;
+                                pSortInfo.Left++;
+                            }
+                        } else if (this.ArrayRightPosition >= this.HelpArraySize)
+                        {
+                            pSortInfo.Array[pSortInfo.Left] = pSortInfo.ArrayUp[pSortInfo.UpLeft];
+                            pSortInfo.ArrayUp[pSortInfo.UpLeft] = -1;
+                            this.ArrayLeftPosition++;
+                            if (this.ArrayLeftPosition < this.HelpArraySize) {
+                                pSortInfo.UpLeft++;
+                                pSortInfo.Left++;
+                            }
+                            else {
+                                pSortInfo.UpLeft = -1;
+                            }
                         }
                     }
                     else if (pSortInfo.click === pSortInfo.UpRight) {
@@ -127,13 +144,48 @@ function MergeSorter() {
                         {
                             pSortInfo.Array[pSortInfo.Left] = pSortInfo.ArrayUp[pSortInfo.UpRight];
                             pSortInfo.ArrayUp[pSortInfo.UpRight] = -1;
-                            pSortInfo.UpRight++;
-                            pSortInfo.Left++;
+                            this.ArrayRightPosition++;
+                            if (this.ArrayRightPosition < this.HelpArraySize) {
+                                pSortInfo.UpRight++;
+                                pSortInfo.Left++;
+                            }
+                            else {
+                                pSortInfo.UpRight = -1;
+                                pSortInfo.Left++;
+                            }
+                        } else if (this.ArrayLeftPosition >= this.HelpArraySize)
+                        {
+                            pSortInfo.Array[pSortInfo.Left] = pSortInfo.ArrayUp[pSortInfo.UpRight];
+                            pSortInfo.ArrayUp[pSortInfo.UpRight] = -1;
+                            this.ArrayRightPosition++;
+                            if (this.ArrayRightPosition < this.HelpArraySize) {
+                                pSortInfo.UpRight++;
+                                pSortInfo.Left++;
+                            }
+                            else {
+                                pSortInfo.UpRight = -1;
+                            }
                         }
-                    }
-                    if (pSortInfo.UpLeft === ~~(pSortInfo.Array.length / 2) || pSortInfo.UpRight === pSortInfo.Array.length) {
-                        pSortInfo.Mode = 2;
-                    }                   
+                    }               
+                } else if (this.ArrayLeftPosition >= this.HelpArraySize && this.ArrayRightPosition >= this.HelpArraySize) {
+                        this.ArrayLeftPosition = 0;
+                        this.ArrayRightPosition = 0;
+                        if (this.GlobalPosition + this.HelpArraySize * 2 >= pSortInfo.Array.length)
+                        {
+                            this.GlobalPosition = 0;
+                            this.HelpArraySize *= 2;
+                            pSortInfo.Mode = 0;
+                        }
+                        else
+                        {
+                            this.GlobalPosition += 2 * this.HelpArraySize;
+                        }
+                        pSortInfo.UpLeft = this.GlobalPosition;
+                        pSortInfo.UpRight = this.GlobalPosition + this.HelpArraySize;
+                        pSortInfo.Left = this.GlobalPosition;
+                }
+                if (this.HelpArraySize === pSortInfo.Array.length) {
+                    pSortInfo.Mode = 2;
                 }
                 break;
             case 2:
@@ -144,6 +196,12 @@ function MergeSorter() {
                         pSortInfo.Left++;
                     }
                 }
+                this.Left = 0;
+                this.Right = -1;
+                this.GlobalPosition = 0;
+                this.HelpArraySize = 1;
+                this.ArrayLeftPosition = 0;
+                this.ArrayRightPosition = 0;
                 pSortInfo.Mode = 3;
                 break;
         }
