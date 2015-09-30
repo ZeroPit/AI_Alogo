@@ -14,14 +14,14 @@ function RandomSort(pSortArtID) {
     
     /**
      * mode
-     * 1 = 12 Uhr
-     * 2 = 1:30 Uhr
-     * 3 = 3 Uhr
-     * 4 = 4:30 Uhr
-     * 5 = 6 Uhr
-     * 6 = 7:30 Uhr
-     * 7 = 9 Uhr
-     * 0 = 10:30 Uhr
+     * 0 = 12 Uhr
+     * 1 = 1:30 Uhr
+     * 2 = 3 Uhr
+     * 3 = 4:30 Uhr
+     * 4 = 6 Uhr
+     * 5 = 7:30 Uhr
+     * 6 = 9 Uhr
+     * 7 = 10:30 Uhr
      * 
      * showRGB
      * 0 = R
@@ -91,28 +91,28 @@ function RandomSort(pSortArtID) {
         var lIndex1, lIndex2;
         lIndex1 = pRow * _Step + pCol;      
         switch (pMode) {           
-            case 1:
+            case 0:
                 lIndex2 = (pRow - 1) * _Step + pCol;
                 break;
-            case 2:
+            case 1:
                 lIndex2 = (pRow - 1) * _Step + pCol + 1;
                 break;
-            case 3:
+            case 2:
                 lIndex2 = pRow * _Step + pCol + 1;
                 break;
-            case 4:
+            case 3:
                 lIndex2 = (pRow+1) * _Step + pCol + 1;
                 break;
-            case 5:
+            case 4:
                 lIndex2 = (pRow + 1) * _Step + pCol;
                 break;
-            case 6:
+            case 5:
                 lIndex2 = (pRow + 1) * _Step + pCol - 1;
                 break;
-            case 7:
+            case 6:
                 lIndex2 = pRow * _Step + pCol - 1;
                 break;
-             case 0:
+            case 7:
                 lIndex2 = (pRow -1)  * _Step + pCol - 1;
                 break;
         }                
