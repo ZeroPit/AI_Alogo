@@ -8,6 +8,10 @@
 
 function OddEvenTranspositionSort() {
     var _Actions, _Array;
+	
+	/*
+	 * Startet die Oddeven Sortierung
+	 */
     this.sortAll = function (array) {
         _Actions = [];
         _Array = array.slice();
@@ -15,12 +19,20 @@ function OddEvenTranspositionSort() {
         _Actions.push({type: "done", "done": 0});
         return _Actions;
     };
+	
+	/*
+	 * Tauscht den Inhalt der 2 übergebenen Parameter und merkt sich die Aktion zur späteren Darstellung
+	 */
     function swap(i, j) {
         var t = _Array[i];
         _Array[i] = _Array[j];
         _Array[j] = t;
         _Actions.push({type: "swap", i: i, j: j});
     }
+	
+	/*
+	 * Implementierung von Oddeven Sort
+	 */	
     function sort() {
         var sorted = false;
         while (!sorted) {
@@ -40,6 +52,9 @@ function OddEvenTranspositionSort() {
         }
     }
 
+	/*
+	 * initialisiert benötigte Membervariablen für Usersort
+	 */
     this.init = function (pTarget) {
     }
 

@@ -8,6 +8,10 @@
 
 function OddEvenMergeSorter() {
     var _Actions, _Array;
+	
+	/*
+	 * Startet die Oddeven Merge Sortierung
+	 */
     this.sortAll = function (array) {
         _Actions = [];
         _Array = array.slice();
@@ -15,12 +19,20 @@ function OddEvenMergeSorter() {
         _Actions.push({type: "done", "done": 0});
         return _Actions;
     };
+	
+	/*
+	 * Tauscht den Inhalt der 2 übergebenen Parameter und merkt sich die Aktion zur späteren Darstellung
+	 */
     function swap(i, j) {
         var t = _Array[i];
         _Array[i] = _Array[j];
         _Array[j] = t;
         _Actions.push({type: "swap", i: i, j: j});
     }
+	
+	/*
+	 * Implementierung von Oddeven Merge Sort
+	 */	
     function oddEvenMergeSort(lo, n) {
         if (n > 1) {
             var m = n >>1 ;
@@ -30,6 +42,9 @@ function OddEvenMergeSorter() {
         }
     }
 
+	/*
+	 * Implementierung der Merge Funktion
+	 */	
     function oddEvenMerge(lo, n, r) {
         var m = r * 2;
         if (m < n) {
@@ -46,6 +61,9 @@ function OddEvenMergeSorter() {
         }
     }
 
+	/*
+	 * initialisiert benötigte Membervariablen für Usersort
+	 */
     this.init = function (pTarget) {
     }
 

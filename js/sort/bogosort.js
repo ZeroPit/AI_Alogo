@@ -8,6 +8,10 @@
 
 function Bogosort() {
     var _Actions, _Array, n;
+	
+	/*
+	 * Startet die Bogosort Sortierung
+	 */
     this.sortAll = function (array) {
         _Actions = [];
         _Array = array.slice();
@@ -16,6 +20,10 @@ function Bogosort() {
         _Actions.push({type: "done", "done": 0});
         return _Actions;
     };
+	
+	/*
+	 * Füllt das Array mit Zufallszahlen
+	 */
     function shuffle() {
         var i = _Array.length, j, t;
         while (--i > 0) {
@@ -27,6 +35,10 @@ function Bogosort() {
         }
         return _Array;
     }
+
+	/*
+	 * Kontrolliert ob ein Array korrekt sortiert ist
+	 */	
     function inOrder() {
         for (var i = 1; i < _Array.length; i++) {        
             if (_Array[i] < _Array[i - 1]) {
@@ -35,6 +47,10 @@ function Bogosort() {
         }
         return true;
     }
+	
+	/*
+	 * Implementiert Bogosort
+	 */	
     function start() {
         var tries = 0;
         while (!inOrder()) {
@@ -45,6 +61,9 @@ function Bogosort() {
         }
     }
 
+	/*
+	 * initialisiert benötigte Membervariablen für Usersort
+	 */
     this.init = function (pTarget) {
     }
 
