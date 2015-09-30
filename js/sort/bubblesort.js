@@ -64,7 +64,7 @@ function BubbleSort() {
             case 0:
                 return "Wenn das 1. Vergleichselement (Grün) größer ist als das 2. Vergleichselement (Rot) dann klicke Grün ansonsten Rot";          
             case 3:
-                return "Fertig";
+                return "Das Array ist sortiert";
         }
     };
     this.onClick = function (pSortInfo, pOriginal) {

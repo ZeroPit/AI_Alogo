@@ -101,7 +101,7 @@ function MergeSorter() {
             case 2:
                 return "Hilfs Array löschen";
             case 3:
-                return "Fertig";
+                return "Das Array ist sortiert";
         }
     };
     this.onClick = function (pSortInfo, pOriginal) {
