@@ -65,7 +65,7 @@ function Bogosort() {
 	 * initialisiert benötigte Membervariablen für Usersort
 	 */
     this.init = function (pTarget) {
-    }
+    };
 
     return this;
 }

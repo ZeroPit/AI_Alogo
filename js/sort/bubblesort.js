@@ -64,7 +64,7 @@ function BubbleSort() {
     this.init = function (pTarget) {
         pTarget.LeftStart = 0;
         pTarget.RightStart = 1;
-    }
+    };
 
 	/*
 	 * gibt die Textbeschreibung für den aktuellen Schritt zurück
@@ -92,10 +92,10 @@ function BubbleSort() {
                         var t = pSortInfo.Array[pSortInfo.Left];
                         pSortInfo.Array[pSortInfo.Left] = pSortInfo.Array[pSortInfo.Right];
                         pSortInfo.Array[pSortInfo.Right] = t;
-						// und verschiebe die beiden Markieren um jeweils 1 nach Rechts
+						// und verschiebe die beiden Markierungen um jeweils 1 nach Rechts
                         pSortInfo.Right++;
                         pSortInfo.Left++;
-						// und schreibe in Up das sortiert wurde
+						// und schreibe in Up das etwas sortiert wurde
                         pSortInfo.Up = -1;
                     }
                 }
@@ -103,7 +103,7 @@ function BubbleSort() {
                 else if (pSortInfo.click === pSortInfo.Right) {
 					// Und der linke Wert kleiner gleich dem Rechten ist
                     if (pSortInfo.Array[pSortInfo.Left] <= pSortInfo.Array[pSortInfo.Right]) {
-						// verschiebe die beiden Markieren um jeweils 1 nach Rechts 
+						// verschiebe die beiden Markierungen um jeweils 1 nach Rechts 
                         pSortInfo.Right++;
                         pSortInfo.Left++;
                     }
