@@ -51,5 +51,8 @@ function BitonicSorter() {
 		return k >> 1;
 	}
 
+	this.init = function (pTarget) {
+	}
+
     return this;
 }

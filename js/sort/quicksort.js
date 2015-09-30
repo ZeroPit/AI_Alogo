@@ -58,6 +58,17 @@ function Quicksort() {
     this.SwapElementTwo = 0;
     this.RecursionArray = [];
 
+    this.init = function (pTarget) {
+        pTarget.LeftStart = -2;
+        pTarget.RightStart = -1;
+        pTarget.Low = 0;
+        pTarget.High = -1;
+        pTarget.CompareElement = 0;
+        pTarget.SwapElementOne = 0;
+        pTarget.SwapElementTwo = 0;
+        pTarget.RecursionArray = [];
+    }
+
     this.updateMode = function (pMode) {
         /*
          Methode:	

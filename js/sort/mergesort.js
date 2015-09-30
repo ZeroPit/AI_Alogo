@@ -82,6 +82,16 @@ function MergeSorter() {
     this.ArrayLeftPosition = 0;
     this.ArrayRightPosition = 0;
 
+    this.init = function (pTarget) {
+        pTarget.LeftStart = 0;
+        pTarget.RightStart = -1;
+
+        pTarget.GlobalPosition = 0;
+        pTarget.HelpArraySize = 1;
+        pTarget.ArrayLeftPosition = 0;
+        pTarget.ArrayRightPosition = 0;
+    }
+
     this.updateMode = function (pMode) {
         switch (pMode) {
             case 0:

@@ -50,5 +50,9 @@ function Heapsort() {
             w = 2 * v + 1;
         }
     }
+
+    this.init = function (pTarget) {
+    }
+
     return this;
 }

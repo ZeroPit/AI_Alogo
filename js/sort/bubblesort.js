@@ -47,6 +47,11 @@ function BubbleSort() {
     this.LeftStart = 0;
     this.RightStart = 1;
 
+    this.init = function (pTarget) {
+        pTarget.LeftStart = 0;
+        pTarget.RightStart = 1;
+    }
+
     this.updateMode = function (pMode) {
         /*
          Methode:	

@@ -51,6 +51,19 @@ function ShellSort() {
     this.h = 0;
     this.t = 0;
 
+    this.init = function (pTarget) {
+        pTarget.LeftStart = 0;
+        pTarget.RightStart = 1;
+        pTarget.cols = [4, 2, 1];
+        pTarget.LeftStart = 0;
+        pTarget.RightStart = -1;
+        pTarget.i = 0;
+        pTarget.j = 0;
+        pTarget.k = 0;
+        pTarget.h = 0;
+        pTarget.t = 0;
+    }
+
     this.updateMode = function (pMode) {
         switch (pMode) {
             case 0:

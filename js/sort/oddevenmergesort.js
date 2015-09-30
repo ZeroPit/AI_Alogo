@@ -46,5 +46,8 @@ function OddEvenMergeSorter() {
         }
     }
 
+    this.init = function (pTarget) {
+    }
+
     return this;
 }    

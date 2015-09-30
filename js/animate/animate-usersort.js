@@ -31,6 +31,7 @@ function UserSorting(sortingfunction, target) {
 
     this.startNew = function () {
         this.createNewArray();
+        this.SortingFunction.init(this.SortingFunction);
         _SteepFin = false;
         if (this.SortingFunction.LeftStart == -2) {
             this.SortInfo.Left = Math.floor((this.SortInfo.Array.length / 2) - 1);

@@ -39,5 +39,9 @@ function OddEvenTranspositionSort() {
             }
         }
     }
+
+    this.init = function (pTarget) {
+    }
+
     return this;
 }

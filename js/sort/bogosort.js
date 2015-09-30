@@ -44,5 +44,9 @@ function Bogosort() {
             shuffle();
         }
     }
+
+    this.init = function (pTarget) {
+    }
+
     return this;
 }
