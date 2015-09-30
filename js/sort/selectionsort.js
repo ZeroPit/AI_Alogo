@@ -57,12 +57,10 @@ function SelectionSort() {
          */
         switch (pMode) {
             case 0:
-                return "Grün anklicken";
+                return "Auf das Grüne Element klicken.";
             case 1:
-                return "Grün anklicken";
+                return "Den oberen Wert(Grün) anklicken wenn er kleiner gleich als der Untere(Rot) ist.";
             case 2:
-                return "Grün anklicken";
-            case 3:
                 return "Fertig";
         }
     };
@@ -107,7 +105,7 @@ function SelectionSort() {
                     }
                     if (pSortInfo.Left === pSortInfo.Array.length-1) {
                         pSortInfo.Left = -1;
-                        pSortInfo.Mode = 3;
+                        pSortInfo.Mode = 2;
                         pSortInfo.Update = true;
                     }
                 }
