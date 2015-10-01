@@ -1,7 +1,7 @@
 /* 
     Dateiname  : heapsort.js
     Erstellt   : 2015
-    Authoren   : Peter Steensen (550020) and Denny Lüttschwager (343709)
+    Authoren   : Peter Steensen (550020) and Denny LÃ¼ttschwager (343709)
     Projekt    : JavaScript anstelle Java-Applet
     Professor  : Prof. Lang
 */
@@ -22,7 +22,7 @@ function Heapsort() {
     };
 	
 	/*
-	 * Tauscht den Inhalt der 2 übergebenen Parameter und merkt sich die Aktion zur späteren Darstellung
+	 * Tauscht den Inhalt der 2 Ã¼bergebenen Parameter und merkt sich die Aktion zur spÃ¤teren Darstellung
 	 */
     function swap(i, j) {
         var t = _Array[i];
@@ -69,7 +69,7 @@ function Heapsort() {
     }
 
 	/*
-	 * initialisiert benötigte Membervariablen für Usersort
+	 * initialisiert benï¿½tigte Membervariablen fÃ¼r Usersort
 	 */
     this.init = function (pTarget) {
     };

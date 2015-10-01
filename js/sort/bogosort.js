@@ -1,7 +1,7 @@
 /* 
     Dateiname  : bogosort.js
     Erstellt   : 2015
-    Authoren   : Peter Steensen (550020) and Denny Lüttschwager (343709)
+    Authoren   : Peter Steensen (550020) and Denny LÃ¼ttschwager (343709)
     Projekt    : JavaScript anstelle Java-Applet
     Professor  : Prof. Lang
 */
@@ -22,7 +22,7 @@ function Bogosort() {
     };
 	
 	/*
-	 * Füllt das Array mit Zufallszahlen
+	 * Fï¿½llt das Array mit Zufallszahlen
 	 */
     function shuffle() {
         var i = _Array.length, j, t;
@@ -62,7 +62,7 @@ function Bogosort() {
     }
 
 	/*
-	 * initialisiert benötigte Membervariablen für Usersort
+	 * initialisiert benÃ¶tigte Membervariablen fÃ¼r Usersort
 	 */
     this.init = function (pTarget) {
     };
